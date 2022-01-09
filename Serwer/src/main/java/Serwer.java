@@ -99,7 +99,7 @@ public class Serwer {
         frame.setSize(400,400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(4,1));
-        frame.setVisible(true);
+        //frame.setVisible(true);
         int options[] ={2,3,4,6};
         //dodanie przyciskow
         for(int i=0;i<options.length;i++)
@@ -128,6 +128,7 @@ public class Serwer {
                 }
             });
             frame.getContentPane().add(button);
+            frame.setVisible(true);
         }
     }
 }

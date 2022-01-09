@@ -2,8 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
+import java.util.Scanner;
 
 class Ramka extends JFrame {
+
+    //Socket socket;
 
     /** * Tablica guzikow, ktore beda naszymi polami planszy**/
     public JButton[][] pola_planszy = new JButton[19][29];
@@ -29,6 +33,10 @@ class Ramka extends JFrame {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
     };
+
+    public void komunikat(int x1, int y1, int x2, int y2){
+        System.out.println("dane " + x1 + y1 + x2 + y2);
+    }
 
     public int get_current_X(String coordinates){
 
@@ -115,6 +123,17 @@ class Ramka extends JFrame {
         }
     }
 
+    public void dodaj_wlasciwosci_guzikom(ActionListener dupa){
+
+        for(int x=1; x<=17; x++){
+            for (int y=2; y<=26; y++){
+                if(pola_planszy[x][y] != null){
+                    pola_planszy[x][y].addActionListener(dupa);
+                }
+            }
+        }
+    }
+
     public boolean check_win_BLUE(){
         return (pola_planszy[1][14].getBackground() == Color.BLUE && pola_planszy[2][13].getBackground() == Color.BLUE && pola_planszy[2][15].getBackground() == Color.BLUE &&
                 pola_planszy[3][12].getBackground() == Color.BLUE && pola_planszy[3][14].getBackground() == Color.BLUE && pola_planszy[3][16].getBackground() == Color.BLUE &&
@@ -157,6 +176,7 @@ class Ramka extends JFrame {
     }
 
 
+    /*
     public ActionListener wyb_pionek = new ActionListener() {
 
         public boolean wybrano_piona = true; // pomaga określić czy trzeba wybrać pionka czy ruszyć pionka
@@ -169,6 +189,7 @@ class Ramka extends JFrame {
         int previousX;
         int previousY;
 
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -177,14 +198,19 @@ class Ramka extends JFrame {
             currentX = get_current_X(coordinates);
             currentY = get_current_Y(coordinates);
 
+
             if(wybrano_piona){
 
+
                 if(pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
+
+
 
                     kolor_piona = pola_planszy[currentX][currentY].getBackground();
                     check_ALL(currentX, currentY);
                     previousX = currentX;
                     previousY = currentY;
+
                     wybrano_piona = false;
 
                     System.out.println();
@@ -200,6 +226,11 @@ class Ramka extends JFrame {
                     pola_planszy[currentX][currentY].setBackground(kolor_piona);
                     pola_planszy[previousX][previousY].setBackground(Color.WHITE);
                     clear_grey();
+
+                    //klient.mover(previousX, previousY, currentX, currentY, kolor_piona);
+                    //sender(previousX, previousY, currentX, currentY, kolor_piona);
+
+
                     if(check_ENDGAME()){
                         System.out.println("KONIEC!");
                         System.exit(0);
@@ -216,12 +247,12 @@ class Ramka extends JFrame {
             }
         }
     };
-
+*/
 
     /**
      * Tworzenie planszy
      */
-    Ramka(int liczba_graczy, char id){
+    Ramka(int liczba_graczy, char id) throws Exception {
         super("Chinskie Warcaby, Gracz " + id + " ");
         setBounds(200,200,640,480);
         addWindowListener(new MyWindowAdapter());
@@ -239,7 +270,7 @@ class Ramka extends JFrame {
                 else {
                     pola_planszy[x][y] = new JButton();
                     pola_planszy[x][y].setName(x + "," + y);
-                    pola_planszy[x][y].addActionListener(wyb_pionek);
+                    //pola_planszy[x][y].addActionListener(wyb_pionek);
                     this.add(pola_planszy[x][y]);
 
                     koloruj_pole_w_zaleznosci_od_liczby_graczy(x,y,liczba_graczy);
@@ -247,6 +278,11 @@ class Ramka extends JFrame {
             }
         }
         setResizable(true);
+    }
+
+    public void messMoveSer(int x1, int y1, int x2, int y2, Color dupski){
+        pola_planszy[x1][y1].setBackground(Color.white);
+        pola_planszy[x2][y2].setBackground(dupski);
     }
 
     public void koloruj_pole_w_zaleznosci_od_liczby_graczy(int x, int y, int liczba_graczy){

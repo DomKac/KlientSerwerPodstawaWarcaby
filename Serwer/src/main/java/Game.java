@@ -27,7 +27,7 @@ class Game {
 
     class Player implements Runnable {
         int num; //numer gracza
-        Player opponent;
+        //Player opponent;
         Socket socket;
         Scanner input;
         PrintWriter output;
@@ -42,7 +42,7 @@ class Game {
         public void run() {
             try {
                 setup();
-                //processCommands();
+                processCommands();
             } catch (Exception e) {
                 e.printStackTrace();
             }// finally {
@@ -82,14 +82,17 @@ class Game {
             }
         }
 
-        /*
-        private void processComands(){
+
+        private void processCommands(){
 
             while (input.hasNextLine()){
                 String command = input.nextLine();
 
-                if(command.startsWith("MOVE")){
-                    //wykonaj ruch xd
+                if(command.startsWith("MOVE")){ //ruch z actionlistenera
+                    System.out.println("dostano");
+
+                    players.get(0).output.println(command);
+                    players.get(1).output.println(command);
                 }
                 else if (command.startsWith("SKIP")){
                     //skip
@@ -97,6 +100,6 @@ class Game {
 
             }
         }
-        */
+
     }
 }
