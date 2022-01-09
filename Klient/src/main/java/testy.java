@@ -18,6 +18,7 @@ public class testy {
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
+    public Ramka frame;
 
     public testy(String serverAddress) throws Exception {
 
@@ -34,6 +35,8 @@ public class testy {
             var ilosc = Character.getNumericValue(response.charAt(0));
             System.out.println("Witaj graczu o numerze: " + num);
             System.out.println("ilość graczy wynosi: " + ilosc);
+            frame = new Ramka(ilosc, num);
+            frame.setVisible(true);
 
            //switch (ilosc){
            //    case 2:
@@ -79,6 +82,7 @@ public class testy {
   //    }
   //}
 
+
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {
             System.err.println("Pass the server IP as the sole command line argument");
@@ -89,6 +93,10 @@ public class testy {
         //client.frame.setSize(320, 320);
         //client.frame.setVisible(true);
         //client.frame.setResizable(false);
+
         client.play();
+
+        //client.frame = new Ramka(4 );
+        //client.frame.setVisible(true);
     }
 }
