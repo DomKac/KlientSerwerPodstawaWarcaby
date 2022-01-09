@@ -49,6 +49,8 @@ public class Serwer {
                         game.set(players.get(1));
                         game.numOf(2);
 
+                        game.tab(players);
+
                     case 3:
                         System.out.println("test1dla3");
                         gracz1 = game.new Player(listener.accept(), 1);
@@ -67,8 +69,10 @@ public class Serwer {
                         players.add(gracz3);
                         game.set(players.get(2));
                         game.numOf(3);
+
+                        game.tab(players);
                     case 4:
-                        pool.execute(game.new Player(listener.accept(), '2'));
+                        pool.execute(game.new Player(listener.accept(), 2));
                         pool.execute(game.new Player(listener.accept(), '3'));
                         pool.execute(game.new Player(listener.accept(), '5'));
                         pool.execute(game.new Player(listener.accept(), '6'));

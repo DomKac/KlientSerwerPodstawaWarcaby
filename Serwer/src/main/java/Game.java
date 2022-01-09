@@ -11,6 +11,11 @@ class Game {
     Player player;
     ArrayList<Player> players;
 
+    public void tab(ArrayList<Player> players){
+        this.players = players;
+    }
+
+
     public void set(Player player)
     {
         this.player = player;
@@ -40,15 +45,15 @@ class Game {
                 //processCommands();
             } catch (Exception e) {
                 e.printStackTrace();
-            } finally {
-                if (opponent != null && opponent.output != null) {
-                    opponent.output.println("OTHER_PLAYER_LEFT");
-                }
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                }
-            }
+            }// finally {
+            //    if (opponent != null && opponent.output != null) {
+            //        opponent.output.println("OTHER_PLAYER_LEFT");
+            //    }
+            //    try {
+            //        socket.close();
+            //    } catch (IOException e) {
+            //    }
+            //}
         }
 
         private void setup() throws IOException {
@@ -65,12 +70,33 @@ class Game {
                 System.out.println("The game has started");
                 System.out.println("Player " + currentplayer + " starts");
 
-                for(int i = 1; i <= number_of_players; i++){
+                for(int i = 0; i < numbers; i++){
+                    System.out.println("mess0");
                     players.get(i).currentplayer = currentplayer;
+                    System.out.println("mess1");
                     players.get(i).output.println("TURN " + players.get(i).currentplayer);
+                    System.out.println("mess2");
                     players.get(i).output.println("MESSAGE Player " + players.get(i).currentplayer + " Turn");
+                    System.out.println("mess3");
                 }
             }
         }
+
+        /*
+        private void processComands(){
+
+            while (input.hasNextLine()){
+                String command = input.nextLine();
+
+                if(command.startsWith("MOVE")){
+                    //wykonaj ruch xd
+                }
+                else if (command.startsWith("SKIP")){
+                    //skip
+                }
+
+            }
+        }
+        */
     }
 }

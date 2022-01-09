@@ -42,6 +42,14 @@ public class testy {
 
             while (in.hasNextLine()) {
                 response = in.nextLine();
+                System.out.println("startpetli");
+
+                if(response.startsWith("MESSAGE")){
+                    System.out.println(response);
+                }
+                else{
+                    System.out.println("ajwaj");
+                }
 
             }
             out.println("QUIT");
@@ -50,7 +58,7 @@ public class testy {
             e.printStackTrace();
         } finally {
             System.out.println("koniec");
-            socket.close();
+            //socket.close();
             //frame.dispose();
         }
     }
