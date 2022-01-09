@@ -91,8 +91,10 @@ class Game {
                 if(command.startsWith("MOVE")){ //ruch z actionlistenera
                     System.out.println("dostano");
 
-                    players.get(0).output.println(command);
-                    players.get(1).output.println(command);
+                    for(int i = 0; i < numbers; i++){
+                        players.get(i).output.println(command);
+                    }
+
                 }
                 else if (command.startsWith("SKIP")){
                     //skip
