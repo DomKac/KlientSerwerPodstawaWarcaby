@@ -7,8 +7,6 @@ import java.util.Scanner;
 
 class Ramka extends JFrame {
 
-    //Socket socket;
-
     /** * Tablica guzikow, ktore beda naszymi polami planszy**/
     public JButton[][] pola_planszy = new JButton[19][29];
 
@@ -33,10 +31,6 @@ class Ramka extends JFrame {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
     };
-
-    public void komunikat(int x1, int y1, int x2, int y2){
-        System.out.println("dane " + x1 + y1 + x2 + y2);
-    }
 
     public int get_current_X(String coordinates){
 
@@ -176,79 +170,6 @@ class Ramka extends JFrame {
     }
 
 
-    /*
-    public ActionListener wyb_pionek = new ActionListener() {
-
-        public boolean wybrano_piona = true; // pomaga określić czy trzeba wybrać pionka czy ruszyć pionka
-        // true -> kliknięcie pola_planszy wybiera pionka którego chcemy ruszyć
-        // false -> kilknięcie pola_planszy stawia wcześniej wybranego piona na wybrane miejsce
-
-        Color kolor_piona;
-        int currentX;
-        int currentY;
-        int previousX;
-        int previousY;
-
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            String coordinates = ((JComponent) e.getSource()).getName();
-            System.out.println(coordinates);
-            currentX = get_current_X(coordinates);
-            currentY = get_current_Y(coordinates);
-
-
-            if(wybrano_piona){
-
-
-                if(pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
-
-
-
-                    kolor_piona = pola_planszy[currentX][currentY].getBackground();
-                    check_ALL(currentX, currentY);
-                    previousX = currentX;
-                    previousY = currentY;
-
-                    wybrano_piona = false;
-
-                    System.out.println();
-                }
-                else{
-                    System.out.println("Wybierz kolorowe pole ");
-
-                }
-            }
-            else{
-                if(pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
-                    System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
-                    pola_planszy[currentX][currentY].setBackground(kolor_piona);
-                    pola_planszy[previousX][previousY].setBackground(Color.WHITE);
-                    clear_grey();
-
-                    //klient.mover(previousX, previousY, currentX, currentY, kolor_piona);
-                    //sender(previousX, previousY, currentX, currentY, kolor_piona);
-
-
-                    if(check_ENDGAME()){
-                        System.out.println("KONIEC!");
-                        System.exit(0);
-                    }
-                    wybrano_piona = true;
-                }
-                else if (previousX == currentX && previousY == currentY){
-                    clear_grey();
-                    wybrano_piona = true;
-                }
-                else{
-                    System.out.println("zle pole debilu");
-                }
-            }
-        }
-    };
-*/
-
     /**
      * Tworzenie planszy
      */
@@ -281,7 +202,7 @@ class Ramka extends JFrame {
     }
 
     public void messMoveSer(int x1, int y1, int x2, int y2, Color dupski){
-        pola_planszy[x1][y1].setBackground(Color.white);
+        pola_planszy[x1][y1].setBackground(Color.WHITE);
         pola_planszy[x2][y2].setBackground(dupski);
     }
 

@@ -14,6 +14,8 @@ public class Klient {
     public Ramka frame;
 
 
+
+
 /////////////////////////////////////////////////////
     public ActionListener wyb_pionek = new ActionListener() {
 
@@ -26,6 +28,7 @@ public class Klient {
         int currentY;
         int previousX;
         int previousY;
+        final Enigma enigma = new Enigma();
 
 
         @Override
@@ -65,7 +68,7 @@ public class Klient {
                     frame.pola_planszy[previousX][previousY].setBackground(Color.WHITE);
                     frame.clear_grey();
 
-                    out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + kolor_piona);
+                    out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(kolor_piona));
                     //klient.mover(previousX, previousY, currentX, currentY, kolor_piona);
                     //sender(previousX, previousY, currentX, currentY, kolor_piona);
 
@@ -108,6 +111,7 @@ public class Klient {
             frame = new Ramka(ilosc, num);
             frame.dodaj_wlasciwosci_guzikom(wyb_pionek);
             frame.setVisible(true);
+            Enigma enigma2 = new Enigma();
 
 
            //switch (ilosc){
@@ -126,10 +130,14 @@ public class Klient {
 
 
                 }
-                else if(response.startsWith("MOVE")){
-                    System.out.println(response);
+                else if(response.startsWith("MOVE")){ //serwer wysłał wiadomość o ruchu jakiegoś gracza
+                    System.out.println(response); //musimy skopiować ten ruch u nas
+                    enigma2.koloruj(response, frame);
+
+
+
                 }
-                else{
+                else if(response.startsWith("SKIP")) {
                     System.out.println("ajwaj");
                 }
 
