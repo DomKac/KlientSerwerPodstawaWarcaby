@@ -48,7 +48,7 @@ public class Enigma {
 
     public void koloruj(String response, Ramka frame){
 
-        // MOVEXX,XX,YY,XX,YY,K,
+        // MOVEXX,XX,YY,XX,YY,K,A
         String x1 = "";
         String y1 = "";
         String x2 = "";
@@ -139,6 +139,66 @@ public class Enigma {
                 }
                 else {
                     return Color.GREEN;
+                }
+            }
+            default:
+                return Color.BLACK;
+        }
+    }
+
+    public Color przekazture(char numerek, int ilosc){
+        switch (ilosc){
+            case 2: {
+                if(numerek == '1'){
+                    return Color.BLUE;
+                }
+                else{
+                    return Color.PINK;
+                }
+            }
+            case 3: {
+                if(numerek == '1'){
+                    return Color.RED;
+                }
+                else if (numerek == '2'){
+                    return Color.PINK;
+                }
+                else{
+                    return Color.YELLOW;
+                }
+            }
+            case 4: {
+                if(numerek == '1'){
+                    return Color.GREEN;
+                }
+                else if (numerek == '2'){
+                    return Color.ORANGE;
+                }
+                else if (numerek == '3'){
+                    return Color.YELLOW;
+                }
+                else {
+                    return Color.RED;
+                }
+            }
+            case 6: {
+                if(numerek == '1'){
+                    return Color.GREEN;
+                }
+                else if (numerek == '2'){
+                    return Color.PINK;
+                }
+                else if (numerek == '3'){
+                    return Color.ORANGE;
+                }
+                else if (numerek == '4'){
+                    return Color.YELLOW;
+                }
+                else if (numerek == '5'){
+                    return Color.BLUE;
+                }
+                else {
+                    return Color.RED;
                 }
             }
             default:

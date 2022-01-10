@@ -112,6 +112,13 @@ public class Klient {
             //frame.marker(enigma2.kolorgracza(num, ilosc));
             frame.setVisible(true);
 
+            if(ilosc == 4){
+                frame.niegrywki[1][1].setBackground(Color.ORANGE);
+            }
+            else{
+                frame.niegrywki[1][1].setBackground(Color.PINK);
+            }
+
 
 
             while (in.hasNextLine()) {
@@ -125,8 +132,9 @@ public class Klient {
                 }
                 else if(response.startsWith("MOVE")){ //serwer wysłał wiadomość o ruchu jakiegoś gracza
                     System.out.println(response); //musimy skopiować ten ruch u nas
-                    frame.niegrywki[1][1].setBackground(enigma2.odkoduj_kolor(String.valueOf(response.charAt(response.length()-1))));
+                    //frame.niegrywki[1][1].setBackground(enigma2.przekazture(num, ilosc));
                     enigma2.koloruj(response, frame);
+
                 }
                 else if(response.startsWith("SKIP")) {
                     System.out.println("ajwaj");
