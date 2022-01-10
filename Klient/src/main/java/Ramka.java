@@ -10,12 +10,17 @@ class Ramka extends JFrame {
     PanelGry panelGry;
     JTextField which_player;
     JButton pass;
+
     /**
-     * Tworzenie Głownego okna programu
+     * konstrukcja ramki dla każdego usera
+     * @param liczba_graczy liczba graczy
+     * @param id id gracza
+     * @param markergracza oznaczenie, jaki kolor ma dany gracz
+     * @throws Exception ex
      */
-    Ramka(int liczba_graczy, char id, Color markergracza) throws Exception {
+    Ramka(int liczba_graczy, char id, Color markergracza, int desktopx, int desktopy) throws Exception {
         super("Chinskie Warcaby, Gracz " + id + " ");
-        setBounds(200,200,480,420);
+        setBounds(desktopx,desktopy,465,426);
         addWindowListener(new MyWindowAdapter());
         setLayout(new BorderLayout());
 
@@ -29,19 +34,12 @@ class Ramka extends JFrame {
         up_panel.setLayout(new GridLayout(1,2));
         this.add(down_panel, BorderLayout.PAGE_END);
 
-        which_player = new JTextField();
+        which_player = new JTextField(); //pole z kolorem gracza, czyjego jest tura
         which_player.setEditable(false);
         which_player.setText("Tura gracza: ");
         which_player.setHorizontalAlignment(JTextField.CENTER);
         which_player.setBackground(Color.WHITE);
         up_panel.add(which_player);
-
-        //JTextField your_color = new JTextField();
-        //your_color.setEditable(false);
-        //your_color.setText("Twój kolor to: ");
-        //your_color.setHorizontalAlignment(JTextField.CENTER);
-        //your_color.setBackground(markergracza);
-        //up_panel.add(your_color);
 
         ActionListener open_instruction = new ActionListener() {
 

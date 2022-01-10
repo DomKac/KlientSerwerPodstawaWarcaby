@@ -12,7 +12,8 @@ public class Klient {
     private Scanner in;
     private PrintWriter out;
     public Ramka frame;
-    public boolean tura = false;
+    public boolean tura = false; //informacja od serwera, czy dany gracz ma teraz swoją turę
+    final MusicClient mp3 = new MusicClient();
 
 /////////////////////////////////////////////////////
     public ActionListener wyb_pionek = new ActionListener() {
@@ -29,7 +30,7 @@ public class Klient {
 
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) { //obsługa ruchu
 
             String coordinates = ((JComponent) e.getSource()).getName();
             System.out.println(coordinates);
@@ -41,6 +42,7 @@ public class Klient {
 
                 if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
 
+                    mp3.playSound("C:\\Users\\aleks\\OneDrive\\Pulpit\\technologie\\sounds\\markpiona.wav");
                     kolor_piona = frame.panelGry.pola_planszy[currentX][currentY].getBackground();
                     frame.panelGry.check_ALL(currentX, currentY);
                     previousX = currentX;
@@ -60,6 +62,7 @@ public class Klient {
                     frame.panelGry.clear_grey();
 
                     if(tura){
+                        mp3.playSound("C:\\Users\\aleks\\OneDrive\\Pulpit\\technologie\\sounds\\koniecruchu.wav");
                         out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(kolor_piona));
                         tura = false;
                     }
@@ -81,6 +84,9 @@ public class Klient {
         }
     };
 
+    /**
+     * obsługa pominięcia kolejki
+     */
     public ActionListener skiper = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -93,11 +99,9 @@ public class Klient {
 
     //////////////////////////////////////////
     public Klient(String serverAddress) throws Exception {
-
         socket = new Socket(serverAddress, 58901);
         in = new Scanner(socket.getInputStream());
         out = new PrintWriter(socket.getOutputStream(), true);
-
     }
 
     public void play() throws Exception {
@@ -109,8 +113,7 @@ public class Klient {
             System.out.println("Witaj graczu o numerze: " + num + " " + enigma2.idgracza(num, ilosc));
             System.out.println("ilość graczy wynosi: " + ilosc);
 
-
-            frame = new Ramka(ilosc, num, enigma2.kolorgracza(num, ilosc));
+            frame = new Ramka(ilosc, num, enigma2.kolorgracza(num, ilosc), enigma2.set_desktop_x(num), enigma2.set_desktop_y(num));
             frame.panelGry.dodaj_wlasciwosci_guzikom(wyb_pionek);
             frame.pass.addActionListener(skiper);
             //frame.setBackground(enigma2.kolorgracza(num, ilosc));
@@ -123,27 +126,33 @@ public class Klient {
 
                 if(response.startsWith("MESSAGE")){
                     System.out.println(response);
+
                     if(response.charAt(15) == num){
                         tura = true;
                     }
                 }
+                else if(response.startsWith("MESSAGE_Player")){
+
+                }
 
                 else if(response.startsWith("TURN")){
+
                     System.out.println("teraz jest tura gracza o numerze: " + response.charAt(4));
                     frame.which_player.setBackground(enigma2.kolorgracza(response.charAt(4), ilosc));
                     if(response.charAt(4) == num){
                         tura = true;
+                        System.out.println("twoja tura");
                     }
 
                 }
                 else if(response.startsWith("MOVE")){ //serwer wysłał wiadomość o ruchu jakiegoś gracza
                     System.out.println(response); //musimy skopiować ten ruch u nas
-                    //frame.niegrywki[1][1].setBackground(enigma2.przekazture(num, ilosc));
-                    enigma2.koloruj(response, frame);
+
+                    enigma2.koloruj(response, frame); // oddtworzenie ruchu gracza u nas
                 }
 
             }
-            out.println("QUIT");
+            //out.println("QUIT");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,6 +163,11 @@ public class Klient {
         }
     }
 
+    /**
+     * uruchomienie klienta
+     * @param args ipv4
+     * @throws Exception ex
+     */
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {
             System.err.println("Pass the server IP as the sole command line argument");

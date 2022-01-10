@@ -15,12 +15,19 @@ import java.util.concurrent.Executors;
 
 public class Serwer {
 
-    static ArrayList<Game.Player> players;
-    static Game.Player gracz1, gracz2, gracz3, gracz4, gracz5, gracz6;
+    ArrayList<Game.Player> players;
+    Game.Player gracz1, gracz2, gracz3, gracz4, gracz5, gracz6;
+    final MusicPlayer mp3 = new MusicPlayer();
 
+
+    /**
+     * Funkcja do startowania wątków graczy i dolączania ich klientów do serwera
+     * @param ile_gra ilość graczy
+     * @throws IOException nic
+     */
     public Serwer (int ile_gra) throws IOException {
 
-        players = new ArrayList<Game.Player>();
+        players = new ArrayList<>();
 
         try (var listener = new ServerSocket(58901))
         {
@@ -32,9 +39,8 @@ public class Serwer {
                 Game game = new Game();
 
 
-                switch (ile_gra)
-                {
-                    case 2:
+                switch (ile_gra) {
+                    case 2 -> {
                         gracz1 = game.new Player(listener.accept(), 1);
                         pool.execute(gracz1);
                         players.add(gracz1);
@@ -46,9 +52,8 @@ public class Serwer {
                         game.set(players.get(1));
                         game.numOf(ile_gra);
                         game.tab(players);
-                        break;
-
-                    case 3:
+                    }
+                    case 3 -> {
                         gracz1 = game.new Player(listener.accept(), 1);
                         pool.execute(gracz1);
                         players.add(gracz1);
@@ -65,8 +70,8 @@ public class Serwer {
                         game.set(players.get(2));
                         game.numOf(ile_gra);
                         game.tab(players);
-                        break;
-                    case 4:
+                    }
+                    case 4 -> {
                         gracz1 = game.new Player(listener.accept(), 1);
                         pool.execute(gracz1);
                         players.add(gracz1);
@@ -88,9 +93,8 @@ public class Serwer {
                         game.set(players.get(3));
                         game.numOf(ile_gra);
                         game.tab(players);
-                        break;
-
-                    case 6:
+                    }
+                    case 6 -> {
                         gracz1 = game.new Player(listener.accept(), 1);
                         pool.execute(gracz1);
                         players.add(gracz1);
@@ -122,8 +126,10 @@ public class Serwer {
                         game.set(players.get(5));
                         game.numOf(ile_gra);
                         game.tab(players);
-                        break;
+                    }
                 }
+
+
 
 
             }
@@ -131,6 +137,12 @@ public class Serwer {
     }
 
     //startowanie serwera
+
+    /**
+     * główna funkcja do uruchomienia menu wyboru graczy
+     * @param args nic
+     * @throws IOException nic
+     */
     public static void main(String[] args) throws IOException
     {
         //utworzenie okna
@@ -138,7 +150,7 @@ public class Serwer {
         frame.setSize(400,400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(4,1));
-        int options[] ={2,3,4,6};
+        int[] options ={2,3,4,6};
         //dodanie przyciskow
         for(int i=0;i<options.length;i++)
         {
