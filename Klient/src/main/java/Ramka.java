@@ -15,7 +15,7 @@ class Ramka extends JFrame {
      */
     Ramka(int liczba_graczy, char id, Color markergracza) throws Exception {
         super("Chinskie Warcaby, Gracz " + id + " ");
-        setBounds(200,200,640,560);
+        setBounds(200,200,480,420);
         addWindowListener(new MyWindowAdapter());
         setLayout(new BorderLayout());
 
