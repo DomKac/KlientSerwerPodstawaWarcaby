@@ -12,7 +12,7 @@ public class Klient {
     private Scanner in;
     private PrintWriter out;
     public Ramka frame;
-
+    public boolean tura = false;
 
 /////////////////////////////////////////////////////
     public ActionListener wyb_pionek = new ActionListener() {
@@ -64,7 +64,11 @@ public class Klient {
                     System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
                     frame.clear_grey();
 
-                    out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(kolor_piona));
+                    if(tura){
+                        out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(kolor_piona));
+                        tura = false;
+                    }
+
 
                     if(frame.check_ENDGAME()){
                         System.out.println("KONIEC!");
@@ -127,17 +131,23 @@ public class Klient {
 
                 if(response.startsWith("MESSAGE")){
                     System.out.println(response);
+                    if(response.charAt(15) == num){
+                        tura = true;
+                    }
+                }
 
-                    out.println("DUPA");//zamiast dupy, wysyła koordynaty
+                else if(response.startsWith("TURN")){
+                    System.out.println("teraz jest tura gracza o numerze: " + response.charAt(4));
+                    if(response.charAt(4) == num){
+                        tura = true;
+                    }
+
                 }
                 else if(response.startsWith("MOVE")){ //serwer wysłał wiadomość o ruchu jakiegoś gracza
                     System.out.println(response); //musimy skopiować ten ruch u nas
                     //frame.niegrywki[1][1].setBackground(enigma2.przekazture(num, ilosc));
                     enigma2.koloruj(response, frame);
 
-                }
-                else if(response.startsWith("SKIP")) {
-                    System.out.println("ajwaj");
                 }
 
             }

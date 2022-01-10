@@ -77,7 +77,7 @@ class Game {
                     System.out.println("mess0");
                     players.get(i).currentplayer = currentplayer;
                     System.out.println("mess1");
-                    players.get(i).output.println("TURN " + players.get(i).currentplayer);
+                    players.get(i).output.println("TURN" + players.get(i).currentplayer);
                     System.out.println("mess2");
                     players.get(i).output.println("MESSAGE Player " + players.get(i).currentplayer + " Turn");
                     System.out.println("mess3");
@@ -97,19 +97,22 @@ class Game {
 
                         for(int i = 0; i < numbers; i++){
                             players.get(i).output.println(command);
-
                         }
                         if(currentplayer < numbers){
                             System.out.println("sprawdxmychuja");
                             for (int i = 0; i < numbers; i++){
                                 players.get(i).currentplayer++;
+                                players.get(i).output.println("TURN" + (currentplayer));
                             }
                         }
                         else{
                             for (int i = 0; i < numbers; i++){
                                 players.get(i).currentplayer = 1;
+                                players.get(i).output.println("TURN" + (1));
                             }
                         }
+
+
                     }
                     else{
                         players.get(num - 1).output.println("NOT");
