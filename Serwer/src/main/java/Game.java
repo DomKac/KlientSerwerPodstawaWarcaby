@@ -109,20 +109,36 @@ class Game {
                                 players.get(i).output.println("TURN" + (players.get(i).currentplayer));
                             }
                         }
-
-
                     }
                     else{
                         players.get(num - 1).output.println("NOT");
                     }
-
-
                 }
-
                 else if (command.startsWith("SKIP")){
-                    //skip
-                }
+                    if(currentplayer == num){
+                        System.out.println("dostano");
 
+                        //for(int i = 0; i < numbers; i++){
+                        //    players.get(i).output.println(command);
+                        //}
+                        if(currentplayer < numbers){
+
+                            for (int i = 0; i < numbers; i++){
+                                players.get(i).currentplayer++;
+                                players.get(i).output.println("TURN" + (players.get(i).currentplayer));
+                            }
+                        }
+                        else{
+                            for (int i = 0; i < numbers; i++){
+                                players.get(i).currentplayer = 1;
+                                players.get(i).output.println("TURN" + (players.get(i).currentplayer));
+                            }
+                        }
+                    }
+                    else{
+                        players.get(num - 1).output.println("NOT");
+                    }
+                }
             }
         }
 

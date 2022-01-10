@@ -81,6 +81,16 @@ public class Klient {
         }
     };
 
+    public ActionListener skiper = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(tura){
+                out.println("SKIP");
+                tura = false;
+            }
+        }
+    };
+
     //////////////////////////////////////////
     public Klient(String serverAddress) throws Exception {
 
@@ -102,6 +112,7 @@ public class Klient {
 
             frame = new Ramka(ilosc, num, enigma2.kolorgracza(num, ilosc));
             frame.panelGry.dodaj_wlasciwosci_guzikom(wyb_pionek);
+            frame.pass.addActionListener(skiper);
             //frame.setBackground(enigma2.kolorgracza(num, ilosc));
             //frame.marker(enigma2.kolorgracza(num, ilosc));
             frame.setVisible(true);
