@@ -33,16 +33,16 @@ public class Klient {
 
             String coordinates = ((JComponent) e.getSource()).getName();
             System.out.println(coordinates);
-            currentX = frame.get_current_X(coordinates);
-            currentY = frame.get_current_Y(coordinates);
+            currentX = frame.panelGry.get_current_X(coordinates);
+            currentY = frame.panelGry.get_current_Y(coordinates);
 
             if(wybrano_piona){
 
 
-                if(frame.pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
+                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
 
-                    kolor_piona = frame.pola_planszy[currentX][currentY].getBackground();
-                    frame.check_ALL(currentX, currentY);
+                    kolor_piona = frame.panelGry.pola_planszy[currentX][currentY].getBackground();
+                    frame.panelGry.check_ALL(currentX, currentY);
                     previousX = currentX;
                     previousY = currentY;
 
@@ -55,23 +55,23 @@ public class Klient {
                 }
             }
             else{
-                if(frame.pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
+                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
                     System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
-                    frame.clear_grey();
+                    frame.panelGry.clear_grey();
 
                     if(tura){
                         out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(kolor_piona));
                         tura = false;
                     }
 
-                    if(frame.check_ENDGAME()){
+                    if(frame.panelGry.check_ENDGAME()){
                         System.out.println("KONIEC!");
                         System.exit(0);
                     }
                     wybrano_piona = true;
                 }
                 else if (previousX == currentX && previousY == currentY){
-                    frame.clear_grey();
+                    frame.panelGry.clear_grey();
                     wybrano_piona = true;
                 }
                 else{
@@ -101,19 +101,10 @@ public class Klient {
 
 
             frame = new Ramka(ilosc, num, enigma2.kolorgracza(num, ilosc));
-            frame.dodaj_wlasciwosci_guzikom(wyb_pionek);
+            frame.panelGry.dodaj_wlasciwosci_guzikom(wyb_pionek);
             //frame.setBackground(enigma2.kolorgracza(num, ilosc));
             //frame.marker(enigma2.kolorgracza(num, ilosc));
             frame.setVisible(true);
-
-            if(ilosc == 4){
-                frame.niegrywki[1][1].setBackground(Color.ORANGE);
-            }
-            else{
-                frame.niegrywki[1][1].setBackground(Color.PINK);
-            }
-
-
 
             while (in.hasNextLine()) {
                 response = in.nextLine();
@@ -128,6 +119,7 @@ public class Klient {
 
                 else if(response.startsWith("TURN")){
                     System.out.println("teraz jest tura gracza o numerze: " + response.charAt(4));
+                    frame.which_player.setBackground(enigma2.kolorgracza(response.charAt(4), ilosc));
                     if(response.charAt(4) == num){
                         tura = true;
                     }
