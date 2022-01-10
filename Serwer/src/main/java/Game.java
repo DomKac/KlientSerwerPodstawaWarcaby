@@ -10,6 +10,7 @@ class Game {
     int number_of_players, numbers;
     Player player;
     ArrayList<Player> players;
+    //int currentplayer;
 
     public void tab(ArrayList<Player> players){
         this.players = players;
@@ -31,12 +32,15 @@ class Game {
         Socket socket;
         Scanner input;
         PrintWriter output;
-        int currentplayer;
+        int currentplayer = 1; //czyja jest kolejka
+        //boolean kolejka = false;
 
         public Player(Socket socket, int num) {
             this.socket = socket;
             this.num = num;
         }
+
+
 
         @Override
         public void run() {
@@ -66,7 +70,6 @@ class Game {
             if (num < numbers) {
                 output.println("MESSAGE Waiting for opponent to connect");
             } else {
-                currentplayer = 1;
                 System.out.println("The game has started");
                 System.out.println("Player " + currentplayer + " starts");
 
@@ -88,14 +91,33 @@ class Game {
             while (input.hasNextLine()){
                 String command = input.nextLine();
 
-                if(command.startsWith("MOVE")){ //ruch z actionlistenera
-                    System.out.println("dostano");
+                if(command.startsWith("MOVE")){//ruch z actionlistenera
+                    if(currentplayer == num && num == color_symbol_to_player(command.charAt(command.length()-1))){
+                        System.out.println("dostano");
 
-                    for(int i = 0; i < numbers; i++){
-                        players.get(i).output.println(command);
+                        for(int i = 0; i < numbers; i++){
+                            players.get(i).output.println(command);
+
+                        }
+                        if(currentplayer < numbers){
+                            System.out.println("sprawdxmychuja");
+                            for (int i = 0; i < numbers; i++){
+                                players.get(i).currentplayer++;
+                            }
+                        }
+                        else{
+                            for (int i = 0; i < numbers; i++){
+                                players.get(i).currentplayer = 1;
+                            }
+                        }
+                    }
+                    else{
+                        players.get(num - 1).output.println("NOT");
                     }
 
+
                 }
+
                 else if (command.startsWith("SKIP")){
                     //skip
                 }
@@ -103,5 +125,85 @@ class Game {
             }
         }
 
+////////////////////////////////////////////////////////////////////////////koniec
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public int color_symbol_to_player(char color_symbol){
+
+            switch (numbers){
+
+                case 2: {
+                    if(color_symbol == 'P'){
+                        return 1;
+                    }
+                    else{
+                        return 2;
+                    }
+                }
+                case 3: {
+                    if(color_symbol == 'P'){
+                        return 1;
+                    }
+                    else if (color_symbol == 'Y'){
+                        return 2;
+                    }
+                    else{
+                        return 3;
+                    }
+                }
+                case 4: {
+                    if(color_symbol == 'O'){
+                        return 1;
+                    }
+                    else if (color_symbol == 'Y'){
+                        return 2;
+                    }
+                    else if (color_symbol == 'R'){
+                        return 3;
+                    }
+                    else {
+                        return 4;
+                    }
+                }
+                case 6: {
+                    if(color_symbol == 'P'){
+                        return 1;
+                    }
+                    else if (color_symbol == 'O'){
+                        return 2;
+                    }
+                    else if (color_symbol == 'Y'){
+                        return 3;
+                    }
+                    else if (color_symbol == 'B'){
+                        return 4;
+                    }
+                    else if (color_symbol == 'R'){
+                        return 5;
+                    }
+                    else {
+                        return 6;
+                    }
+                }
+                default:
+                    return 69;
+            }
+        }
     }
 }

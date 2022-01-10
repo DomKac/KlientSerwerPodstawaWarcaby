@@ -9,6 +9,7 @@ class Ramka extends JFrame {
 
     /** * Tablica guzikow, ktore beda naszymi polami planszy**/
     public JButton[][] pola_planszy = new JButton[19][29];
+    public JPanel[][] niegrywki = new JPanel[19][29];
 
     final int[][] plansza = {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -31,6 +32,7 @@ class Ramka extends JFrame {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
     };
+
 
     public int get_current_X(String coordinates){
 
@@ -173,7 +175,7 @@ class Ramka extends JFrame {
     /**
      * Tworzenie planszy
      */
-    Ramka(int liczba_graczy, char id) throws Exception {
+    Ramka(int liczba_graczy, char id, Color markergracza) throws Exception {
         super("Chinskie Warcaby, Gracz " + id + " ");
         setBounds(200,200,640,480);
         addWindowListener(new MyWindowAdapter());
@@ -185,8 +187,14 @@ class Ramka extends JFrame {
 
                 if (plansza[x][y] == -1){
 
-                    JPanel niegrywalne_pole = new JPanel();
-                    this.add(niegrywalne_pole);
+                    niegrywki[x][y] = new JPanel();
+
+
+
+                    if(y == 0 || y == 28){
+                        niegrywki[x][y].setBackground(markergracza);
+                    }
+                    this.add(niegrywki[x][y]);
                 }
                 else {
                     pola_planszy[x][y] = new JButton();

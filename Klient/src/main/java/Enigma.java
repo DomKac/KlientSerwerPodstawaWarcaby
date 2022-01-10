@@ -86,5 +86,126 @@ public class Enigma {
     }
 
 
+    public Color kolorgracza(char numerek, int ilosc){
+        switch (ilosc){
+            case 2: {
+                if(numerek == '1'){
+                    return Color.PINK;
+                }
+                else{
+                    return Color.BLUE;
+                }
+            }
+            case 3: {
+                if(numerek == '1'){
+                    return Color.PINK;
+                }
+                else if (numerek == '2'){
+                    return Color.YELLOW;
+                }
+                else{
+                    return Color.RED;
+                }
+            }
+            case 4: {
+                if(numerek == '1'){
+                    return Color.ORANGE;
+                }
+                else if (numerek == '2'){
+                    return Color.YELLOW;
+                }
+                else if (numerek == '3'){
+                    return Color.RED;
+                }
+                else {
+                    return Color.GREEN;
+                }
+            }
+            case 6: {
+                if(numerek == '1'){
+                    return Color.PINK;
+                }
+                else if (numerek == '2'){
+                    return Color.ORANGE;
+                }
+                else if (numerek == '3'){
+                    return Color.YELLOW;
+                }
+                else if (numerek == '4'){
+                    return Color.BLUE;
+                }
+                else if (numerek == '5'){
+                    return Color.RED;
+                }
+                else {
+                    return Color.GREEN;
+                }
+            }
+            default:
+                return Color.BLACK;
+        }
+    }
+
+    public char idgracza(char numerek, int ilosc){
+        switch (ilosc){
+            case 2: {
+                if(numerek == '1'){
+                    return 'P';
+                }
+                else{
+                    return 'B';
+                }
+            }
+            case 3: {
+                if(numerek == '1'){
+                    return 'P';
+                }
+                else if (numerek == '2'){
+                    return 'Y';
+                }
+                else{
+                    return 'R';
+                }
+            }
+            case 4: {
+                if(numerek == '1'){
+                    return 'O';
+                }
+                else if (numerek == '2'){
+                    return 'Y';
+                }
+                else if (numerek == '3'){
+                    return 'R';
+                }
+                else {
+                    return 'G';
+                }
+            }
+            case 6: {
+                if(numerek == '1'){
+                    return 'P';
+                }
+                else if (numerek == '2'){
+                    return 'O';
+                }
+                else if (numerek == '3'){
+                    return 'Y';
+                }
+                else if (numerek == '4'){
+                    return 'B';
+                }
+                else if (numerek == '5'){
+                    return 'R';
+                }
+                else {
+                    return 'G';
+                }
+            }
+            default:
+                return 'x';
+        }
+    }
+
+
 }
 
