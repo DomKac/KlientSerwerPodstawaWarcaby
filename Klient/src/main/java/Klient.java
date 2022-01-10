@@ -20,7 +20,6 @@ public class Klient {
         public boolean wybrano_piona = true; // pomaga określić czy trzeba wybrać pionka czy ruszyć pionka
         // true -> kliknięcie pola_planszy wybiera pionka którego chcemy ruszyć
         // false -> kilknięcie pola_planszy stawia wcześniej wybranego piona na wybrane miejsce
-
         Color kolor_piona;
         int currentX;
         int currentY;
@@ -37,13 +36,10 @@ public class Klient {
             currentX = frame.get_current_X(coordinates);
             currentY = frame.get_current_Y(coordinates);
 
-
             if(wybrano_piona){
 
 
                 if(frame.pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
-
-
 
                     kolor_piona = frame.pola_planszy[currentX][currentY].getBackground();
                     frame.check_ALL(currentX, currentY);
@@ -56,7 +52,6 @@ public class Klient {
                 }
                 else{
                     System.out.println("Wybierz kolorowe pole ");
-
                 }
             }
             else{
@@ -68,7 +63,6 @@ public class Klient {
                         out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(kolor_piona));
                         tura = false;
                     }
-
 
                     if(frame.check_ENDGAME()){
                         System.out.println("KONIEC!");
@@ -87,7 +81,6 @@ public class Klient {
         }
     };
 
-
     //////////////////////////////////////////
     public Klient(String serverAddress) throws Exception {
 
@@ -105,9 +98,6 @@ public class Klient {
             var ilosc = Character.getNumericValue(response.charAt(0));
             System.out.println("Witaj graczu o numerze: " + num + " " + enigma2.idgracza(num, ilosc));
             System.out.println("ilość graczy wynosi: " + ilosc);
-
-
-
 
 
             frame = new Ramka(ilosc, num, enigma2.kolorgracza(num, ilosc));
@@ -147,7 +137,6 @@ public class Klient {
                     System.out.println(response); //musimy skopiować ten ruch u nas
                     //frame.niegrywki[1][1].setBackground(enigma2.przekazture(num, ilosc));
                     enigma2.koloruj(response, frame);
-
                 }
 
             }

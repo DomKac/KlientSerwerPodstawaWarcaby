@@ -35,55 +35,94 @@ public class Serwer {
                 switch (ile_gra)
                 {
                     case 2:
-                        System.out.println("test1");
                         gracz1 = game.new Player(listener.accept(), 1);
                         pool.execute(gracz1);
                         players.add(gracz1);
                         game.set(players.get(0));
-                        game.numOf(2);
-
-                        System.out.println("test2");
+                        game.numOf(ile_gra);
                         gracz2 = game.new Player(listener.accept(), 2);
                         pool.execute(gracz2);
                         players.add(gracz2);
                         game.set(players.get(1));
-                        game.numOf(2);
-
+                        game.numOf(ile_gra);
                         game.tab(players);
+                        break;
 
                     case 3:
-                        System.out.println("test1dla3");
                         gracz1 = game.new Player(listener.accept(), 1);
                         pool.execute(gracz1);
                         players.add(gracz1);
                         game.set(players.get(0));
-                        game.numOf(3);
-                        System.out.println("test2");
+                        game.numOf(ile_gra);
                         gracz2 = game.new Player(listener.accept(), 2);
                         pool.execute(gracz2);
                         players.add(gracz2);
                         game.set(players.get(1));
-                        game.numOf(3);
+                        game.numOf(ile_gra);
                         gracz3 = game.new Player(listener.accept(), 3);
                         pool.execute(gracz3);
                         players.add(gracz3);
                         game.set(players.get(2));
-                        game.numOf(3);
-
+                        game.numOf(ile_gra);
                         game.tab(players);
+                        break;
                     case 4:
-                        pool.execute(game.new Player(listener.accept(), 2));
-                        pool.execute(game.new Player(listener.accept(), '3'));
-                        pool.execute(game.new Player(listener.accept(), '5'));
-                        pool.execute(game.new Player(listener.accept(), '6'));
-                    case 6:
-                        pool.execute(game.new Player(listener.accept(), '1'));
-                        pool.execute(game.new Player(listener.accept(), '2'));
-                        pool.execute(game.new Player(listener.accept(), '3'));
-                        pool.execute(game.new Player(listener.accept(), '4'));
-                        pool.execute(game.new Player(listener.accept(), '5'));
-                        pool.execute(game.new Player(listener.accept(), '6'));
+                        gracz1 = game.new Player(listener.accept(), 1);
+                        pool.execute(gracz1);
+                        players.add(gracz1);
+                        game.set(players.get(0));
+                        game.numOf(ile_gra);
+                        gracz2 = game.new Player(listener.accept(), 2);
+                        pool.execute(gracz2);
+                        players.add(gracz2);
+                        game.set(players.get(1));
+                        game.numOf(ile_gra);
+                        gracz3 = game.new Player(listener.accept(), 3);
+                        pool.execute(gracz3);
+                        players.add(gracz3);
+                        game.set(players.get(2));
+                        game.numOf(ile_gra);
+                        gracz4 = game.new Player(listener.accept(), 4);
+                        pool.execute(gracz4);
+                        players.add(gracz4);
+                        game.set(players.get(3));
+                        game.numOf(ile_gra);
+                        game.tab(players);
+                        break;
 
+                    case 6:
+                        gracz1 = game.new Player(listener.accept(), 1);
+                        pool.execute(gracz1);
+                        players.add(gracz1);
+                        game.set(players.get(0));
+                        game.numOf(ile_gra);
+                        gracz2 = game.new Player(listener.accept(), 2);
+                        pool.execute(gracz2);
+                        players.add(gracz2);
+                        game.set(players.get(1));
+                        game.numOf(ile_gra);
+                        gracz3 = game.new Player(listener.accept(), 3);
+                        pool.execute(gracz3);
+                        players.add(gracz3);
+                        game.set(players.get(2));
+                        game.numOf(ile_gra);
+                        gracz4 = game.new Player(listener.accept(), 4);
+                        pool.execute(gracz4);
+                        players.add(gracz4);
+                        game.set(players.get(3));
+                        game.numOf(ile_gra);
+                        gracz5 = game.new Player(listener.accept(), 5);
+                        pool.execute(gracz5);
+                        players.add(gracz5);
+                        game.set(players.get(4));
+                        game.numOf(ile_gra);
+                        gracz6 = game.new Player(listener.accept(), 6);
+                        pool.execute(gracz6);
+                        players.add(gracz6);
+                        game.set(players.get(5));
+                        game.numOf(ile_gra);
+                        game.tab(players);
+                        break;
                 }
 
 
@@ -99,7 +138,6 @@ public class Serwer {
         frame.setSize(400,400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(4,1));
-        //frame.setVisible(true);
         int options[] ={2,3,4,6};
         //dodanie przyciskow
         for(int i=0;i<options.length;i++)
@@ -115,14 +153,11 @@ public class Serwer {
                     {
                         frame.setVisible(false);
                         //utworzenie serwera dla odpowiedniej liczby graczy
-                        System.out.println("dupa1");
-                        //numberofplayers(options[j]);
+                        System.out.println("startowanie");
                         Serwer server = new Serwer(options[j]);//uruchomienie serwera dla danej liczby graczy
-                        System.out.println("dupa2");
                     }
                     catch (IOException e)
                     {
-                        System.out.println("dupa3");
                         e.printStackTrace();
                     }
                 }

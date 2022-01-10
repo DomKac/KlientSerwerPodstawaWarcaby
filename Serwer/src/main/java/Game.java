@@ -3,19 +3,19 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 class Game {
 
-    int number_of_players, numbers;
+    int numbers;
     Player player;
     ArrayList<Player> players;
-    //int currentplayer;
+    Random random = new Random(); //określenie pierwszego gracza
 
     public void tab(ArrayList<Player> players){
         this.players = players;
     }
-
 
     public void set(Player player)
     {
@@ -28,18 +28,15 @@ class Game {
 
     class Player implements Runnable {
         int num; //numer gracza
-        //Player opponent;
         Socket socket;
         Scanner input;
         PrintWriter output;
-        int currentplayer = 1; //czyja jest kolejka
-        //boolean kolejka = false;
+        int currentplayer; //czyja jest kolejka
 
         public Player(Socket socket, int num) {
             this.socket = socket;
             this.num = num;
         }
-
 
 
         @Override
@@ -64,6 +61,7 @@ class Game {
             input = new Scanner(socket.getInputStream());
             output = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("ilość graczuw: " + numbers);
+            currentplayer = random.nextInt(numbers)+1;
 
             output.println(numbers + "WELCOME " + num); //0 i 9
 
