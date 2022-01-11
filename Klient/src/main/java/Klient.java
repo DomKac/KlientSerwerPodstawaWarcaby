@@ -14,6 +14,7 @@ public class Klient {
     public Ramka frame;
     public boolean tura = false; //informacja od serwera, czy dany gracz ma teraz swoją turę
     final MusicClient mp3 = new MusicClient();
+    boolean raz = true;
 
 /////////////////////////////////////////////////////
     public ActionListener wyb_pionek = new ActionListener() {
@@ -56,7 +57,7 @@ public class Klient {
                 }
             }
             else{
-                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
+                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY || frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE) {
 
                     //|| frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE //god mode
 
@@ -146,11 +147,12 @@ public class Klient {
                     System.out.println(response); //musimy skopiować ten ruch u nas
 
                     enigma2.koloruj(response, frame);// oddtworzenie ruchu gracza u nas
-                    if(frame.panelGry.wygrana(kolorgracza)){
+                    if(frame.panelGry.wygrana(kolorgracza) && raz){
                         System.out.println("KONIEC! WYGRALES");
                         mp3.playSound("epicwin.wav");
                         out.println("WINNER" + pom);
                         frame.setVisible(false);
+                        raz = false;
                     }
                 }
             }

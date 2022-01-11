@@ -88,7 +88,7 @@ class Game {
                 output.println("MESSAGE Waiting for opponent to connect");
             } else {
                 System.out.println("The game has started");
-                mp3.playSound("b1lowdb.wav"); //muzyka w tle
+                mp3.playSound("b1git.wav"); //muzyka w tle
                 System.out.println("po dzwienku");
                 System.out.println("Player " + currentplayer + " starts");
 
