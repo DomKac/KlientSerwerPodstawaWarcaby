@@ -56,7 +56,10 @@ public class Klient {
                 }
             }
             else{
-                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY || frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE) {
+                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
+
+                    //|| frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE //god mode
+
                     System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
                     frame.panelGry.clear_grey();
 
