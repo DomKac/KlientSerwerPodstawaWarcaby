@@ -40,7 +40,7 @@ public class Klient {
             if(wybrano_piona){
 
 
-                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
+                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == frame.panelGry.kolor){
 
                     mp3.playSound("markpiona.wav");
                     kolor_piona = frame.panelGry.pola_planszy[currentX][currentY].getBackground();
@@ -57,7 +57,7 @@ public class Klient {
                 }
             }
             else{
-                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY || frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE) {
+                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
 
                     //|| frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE //god mode
 

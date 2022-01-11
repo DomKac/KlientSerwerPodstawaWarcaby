@@ -7,6 +7,7 @@ public class PanelGry extends JPanel {
     /** * Tablica guzikow, ktore beda naszymi polami planszy**/
     public JButton[][] pola_planszy = new JButton[19][29];
     public JPanel[][] niegrywalne_pola = new JPanel[19][29];
+    public  Color kolor;
 
     final int[][] plansza = { //zakodowanie pól graczy, pustych pól i przestrzeni
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -235,6 +236,7 @@ public class PanelGry extends JPanel {
     PanelGry(int liczba_graczy, Color marker_gracza){
 
         setLayout(new GridLayout(19, 29));
+        this.kolor = marker_gracza;
 
         for(int x=0;x<19;x++)
         {
