@@ -41,12 +41,12 @@ public class Serwer {
 
                 switch (ile_gra) {
                     case 2 -> {
-                        gracz1 = game.new Player(listener.accept(), 1);
+                        gracz1 = game.new Player(listener.accept(), 1, 0);
                         pool.execute(gracz1);
                         players.add(gracz1);
                         game.set(players.get(0));
                         game.numOf(ile_gra);
-                        gracz2 = game.new Player(listener.accept(), 2);
+                        gracz2 = game.new Player(listener.accept(), 2, 0);
                         pool.execute(gracz2);
                         players.add(gracz2);
                         game.set(players.get(1));
@@ -54,17 +54,17 @@ public class Serwer {
                         game.tab(players);
                     }
                     case 3 -> {
-                        gracz1 = game.new Player(listener.accept(), 1);
+                        gracz1 = game.new Player(listener.accept(), 1, 0);
                         pool.execute(gracz1);
                         players.add(gracz1);
                         game.set(players.get(0));
                         game.numOf(ile_gra);
-                        gracz2 = game.new Player(listener.accept(), 2);
+                        gracz2 = game.new Player(listener.accept(), 2, 0);
                         pool.execute(gracz2);
                         players.add(gracz2);
                         game.set(players.get(1));
                         game.numOf(ile_gra);
-                        gracz3 = game.new Player(listener.accept(), 3);
+                        gracz3 = game.new Player(listener.accept(), 3, 0);
                         pool.execute(gracz3);
                         players.add(gracz3);
                         game.set(players.get(2));
@@ -72,22 +72,22 @@ public class Serwer {
                         game.tab(players);
                     }
                     case 4 -> {
-                        gracz1 = game.new Player(listener.accept(), 1);
+                        gracz1 = game.new Player(listener.accept(), 1, 0);
                         pool.execute(gracz1);
                         players.add(gracz1);
                         game.set(players.get(0));
                         game.numOf(ile_gra);
-                        gracz2 = game.new Player(listener.accept(), 2);
+                        gracz2 = game.new Player(listener.accept(), 2, 0);
                         pool.execute(gracz2);
                         players.add(gracz2);
                         game.set(players.get(1));
                         game.numOf(ile_gra);
-                        gracz3 = game.new Player(listener.accept(), 3);
+                        gracz3 = game.new Player(listener.accept(), 3, 0);
                         pool.execute(gracz3);
                         players.add(gracz3);
                         game.set(players.get(2));
                         game.numOf(ile_gra);
-                        gracz4 = game.new Player(listener.accept(), 4);
+                        gracz4 = game.new Player(listener.accept(), 4, 0);
                         pool.execute(gracz4);
                         players.add(gracz4);
                         game.set(players.get(3));
@@ -95,32 +95,32 @@ public class Serwer {
                         game.tab(players);
                     }
                     case 6 -> {
-                        gracz1 = game.new Player(listener.accept(), 1);
+                        gracz1 = game.new Player(listener.accept(), 1, 0);
                         pool.execute(gracz1);
                         players.add(gracz1);
                         game.set(players.get(0));
                         game.numOf(ile_gra);
-                        gracz2 = game.new Player(listener.accept(), 2);
+                        gracz2 = game.new Player(listener.accept(), 2, 0);
                         pool.execute(gracz2);
                         players.add(gracz2);
                         game.set(players.get(1));
                         game.numOf(ile_gra);
-                        gracz3 = game.new Player(listener.accept(), 3);
+                        gracz3 = game.new Player(listener.accept(), 3, 0);
                         pool.execute(gracz3);
                         players.add(gracz3);
                         game.set(players.get(2));
                         game.numOf(ile_gra);
-                        gracz4 = game.new Player(listener.accept(), 4);
+                        gracz4 = game.new Player(listener.accept(), 4, 0);
                         pool.execute(gracz4);
                         players.add(gracz4);
                         game.set(players.get(3));
                         game.numOf(ile_gra);
-                        gracz5 = game.new Player(listener.accept(), 5);
+                        gracz5 = game.new Player(listener.accept(), 5, 0);
                         pool.execute(gracz5);
                         players.add(gracz5);
                         game.set(players.get(4));
                         game.numOf(ile_gra);
-                        gracz6 = game.new Player(listener.accept(), 6);
+                        gracz6 = game.new Player(listener.accept(), 6, 0);
                         pool.execute(gracz6);
                         players.add(gracz6);
                         game.set(players.get(5));
@@ -128,10 +128,6 @@ public class Serwer {
                         game.tab(players);
                     }
                 }
-
-
-
-
             }
         }
     }
@@ -146,7 +142,7 @@ public class Serwer {
     public static void main(String[] args) throws IOException
     {
         //utworzenie okna
-        JFrame frame=new JFrame("Ile osób chce grać w to gówno?");
+        JFrame frame=new JFrame("Proszę podac ilosc graczy:");
         frame.setSize(400,400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(4,1));

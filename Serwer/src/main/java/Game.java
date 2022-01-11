@@ -13,6 +13,7 @@ class Game {
     ArrayList<Player> players; //tablica graczy
     Random random = new Random(); //określenie pierwszego gracza
 
+
     /**
      * funkcja do zwracania tablicy z graczami
      * @param players gracze
@@ -44,6 +45,7 @@ class Game {
         Socket socket;
         Scanner input;
         PrintWriter output;
+        int win = 0;
         int currentplayer; //czyja jest kolejka
         final MusicPlayer mp3 = new MusicPlayer();
 
@@ -52,9 +54,10 @@ class Game {
          * @param socket port
          * @param num id gracza
          */
-        public Player(Socket socket, int num) {
+        public Player(Socket socket, int num, int win) {
             this.socket = socket;
             this.num = num;
+            this.win = win;
         }
 
 
@@ -85,7 +88,7 @@ class Game {
                 output.println("MESSAGE Waiting for opponent to connect");
             } else {
                 System.out.println("The game has started");
-                mp3.playSound("C:\\Users\\aleks\\OneDrive\\Pulpit\\technologie\\sounds\\b1wavelower.wav"); //muzyka w tle
+                mp3.playSound("b1lowdb.wav"); //muzyka w tle
                 System.out.println("po dzwienku");
                 System.out.println("Player " + currentplayer + " starts");
 
@@ -100,7 +103,6 @@ class Game {
                 }
             }
         }
-
 
         /**
          * przetwarzanie komend od graczy i wysyłka komend do nich
@@ -131,6 +133,11 @@ class Game {
                     else{
                         players.get(num - 1).output.println("NOT");
                     }
+                }
+
+                else if (command.startsWith("WINNER")){//poprawne
+                    players.get(Character.getNumericValue(command.charAt(6))-1).win = 1;
+                    System.out.println("the winner is" + players.get(Character.getNumericValue(command.charAt(6))-1).num );
                 }
             }
         }

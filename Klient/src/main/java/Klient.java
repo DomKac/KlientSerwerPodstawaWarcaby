@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
@@ -42,7 +42,7 @@ public class Klient {
 
                 if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
 
-                    mp3.playSound("C:\\Users\\aleks\\OneDrive\\Pulpit\\technologie\\sounds\\markpiona.wav");
+                    mp3.playSound("markpiona.wav");
                     kolor_piona = frame.panelGry.pola_planszy[currentX][currentY].getBackground();
                     frame.panelGry.check_ALL(currentX, currentY);
                     previousX = currentX;
@@ -57,20 +57,17 @@ public class Klient {
                 }
             }
             else{
-                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
+                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY || frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE) {
                     System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
                     frame.panelGry.clear_grey();
 
                     if(tura){
-                        mp3.playSound("C:\\Users\\aleks\\OneDrive\\Pulpit\\technologie\\sounds\\koniecruchu.wav");
+                        mp3.playSound("koniecruchu.wav");
                         out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(kolor_piona));
                         tura = false;
                     }
 
-                    if(frame.panelGry.check_ENDGAME()){
-                        System.out.println("KONIEC!");
-                        System.exit(0);
-                    }
+
                     wybrano_piona = true;
                 }
                 else if (previousX == currentX && previousY == currentY){
@@ -78,7 +75,7 @@ public class Klient {
                     wybrano_piona = true;
                 }
                 else{
-                    System.out.println("zle pole debilu");
+                    System.out.println("zle pole");
                 }
             }
         }
@@ -108,16 +105,16 @@ public class Klient {
         try {
             var response = in.nextLine();
             var num = response.charAt(9);
+            var pom = num;
             Enigma enigma2 = new Enigma();
             var ilosc = Character.getNumericValue(response.charAt(0));
-            System.out.println("Witaj graczu o numerze: " + num + " " + enigma2.idgracza(num, ilosc));
+            char kolorgracza = enigma2.idgracza(num, ilosc);
+            System.out.println("Witaj graczu o numerze: " + num + " " + kolorgracza);
             System.out.println("ilość graczy wynosi: " + ilosc);
 
             frame = new Ramka(ilosc, num, enigma2.kolorgracza(num, ilosc), enigma2.set_desktop_x(num), enigma2.set_desktop_y(num));
             frame.panelGry.dodaj_wlasciwosci_guzikom(wyb_pionek);
             frame.pass.addActionListener(skiper);
-            //frame.setBackground(enigma2.kolorgracza(num, ilosc));
-            //frame.marker(enigma2.kolorgracza(num, ilosc));
             frame.setVisible(true);
 
             while (in.hasNextLine()) {
@@ -134,7 +131,6 @@ public class Klient {
                 else if(response.startsWith("MESSAGE_Player")){
 
                 }
-
                 else if(response.startsWith("TURN")){
 
                     System.out.println("teraz jest tura gracza o numerze: " + response.charAt(4));
@@ -142,15 +138,28 @@ public class Klient {
                     if(response.charAt(4) == num){
                         tura = true;
                         System.out.println("twoja tura");
+                        if(frame.panelGry.wygrana(kolorgracza)){
+                            System.out.println("KONIEC!");
+                            out.println("SKIP");
+                            //frame.setVisible(false);
+                            //socket.close();
+                        }
                     }
-
                 }
                 else if(response.startsWith("MOVE")){ //serwer wysłał wiadomość o ruchu jakiegoś gracza
                     System.out.println(response); //musimy skopiować ten ruch u nas
 
-                    enigma2.koloruj(response, frame); // oddtworzenie ruchu gracza u nas
-                }
+                    enigma2.koloruj(response, frame);// oddtworzenie ruchu gracza u nas
+                    if(frame.panelGry.wygrana(kolorgracza)){
+                        System.out.println("KONIEC! WYGRALES");
+                        mp3.playSound("epicwin.wav");
+                        out.println("WINNER" + pom);
+                        frame.setVisible(false);
 
+
+                        //socket.close();
+                    }
+                }
             }
             //out.println("QUIT");
 
@@ -175,5 +184,14 @@ public class Klient {
         }
         Klient client = new Klient(args[0]);
         client.play();
+    }
+
+    public void setPostionPanel(Ramka ramka){
+
+        System.out.println("setPoositionPanel1");
+        JButton dupa = new JButton("GRATULACJE CWELU");
+        ramka.remove(ramka.panelGry);
+        ramka.add(dupa, BorderLayout.CENTER);
+        System.out.println("setPoositionPanel2");
     }
 }

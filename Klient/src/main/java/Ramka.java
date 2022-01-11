@@ -11,6 +11,8 @@ class Ramka extends JFrame {
     JTextField which_player;
     JButton pass;
 
+
+
     /**
      * konstrukcja ramki dla każdego usera
      * @param liczba_graczy liczba graczy
@@ -58,7 +60,10 @@ class Ramka extends JFrame {
         down_panel.add(pass);
 
         setResizable(true);
+
     }
+
+
 }
 
 
