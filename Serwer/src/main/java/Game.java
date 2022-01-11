@@ -160,9 +160,6 @@ class Game {
             }
         }
 
-////////////////////////////////////////////////////////////////////////////koniec
-
-
         /**
          * funkcja na podstawie oznaczenia koloru gracza zwraca wartość numeryczną tego koloru
          * @param color_symbol alias literowy koloru

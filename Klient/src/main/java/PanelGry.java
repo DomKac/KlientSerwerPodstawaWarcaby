@@ -210,6 +210,11 @@ public class PanelGry extends JPanel {
                 pola_planszy[8][23].getBackground() == Color.YELLOW);
     }
 
+    /**
+     * sprawdzanie czy dany gracz wygrał
+     * @param markergracza jego kolor
+     * @return sprawdzanie zwycięstwa dla koloru
+     */
     public boolean wygrana(char markergracza){
         return switch (markergracza) {
             case 'P' -> check_win_PINK();
@@ -220,14 +225,6 @@ public class PanelGry extends JPanel {
             case 'G' -> check_win_GREEN();
             default -> false;
         };
-    }
-
-    /**
-     * koniec gry, jeśli wygrał
-     * @return koniec
-     */
-    public boolean check_ENDGAME(){
-        return check_win_BLUE() || check_win_YELLOW() || check_win_GREEN() || check_win_PINK() || check_win_RED() || check_win_ORANGE();
     }
 
     /**

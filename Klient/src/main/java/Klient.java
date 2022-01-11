@@ -28,7 +28,6 @@ public class Klient {
         int previousY;
         final Enigma enigma = new Enigma();
 
-
         @Override
         public void actionPerformed(ActionEvent e) { //obsługa ruchu
 
@@ -66,7 +65,6 @@ public class Klient {
                         out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(kolor_piona));
                         tura = false;
                     }
-
 
                     wybrano_piona = true;
                 }
@@ -119,7 +117,6 @@ public class Klient {
 
             while (in.hasNextLine()) {
                 response = in.nextLine();
-                System.out.println("startpetli");
 
                 if(response.startsWith("MESSAGE")){
                     System.out.println(response);
@@ -128,9 +125,7 @@ public class Klient {
                         tura = true;
                     }
                 }
-                else if(response.startsWith("MESSAGE_Player")){
 
-                }
                 else if(response.startsWith("TURN")){
 
                     System.out.println("teraz jest tura gracza o numerze: " + response.charAt(4));
@@ -141,8 +136,6 @@ public class Klient {
                         if(frame.panelGry.wygrana(kolorgracza)){
                             System.out.println("KONIEC!");
                             out.println("SKIP");
-                            //frame.setVisible(false);
-                            //socket.close();
                         }
                     }
                 }
@@ -155,13 +148,9 @@ public class Klient {
                         mp3.playSound("epicwin.wav");
                         out.println("WINNER" + pom);
                         frame.setVisible(false);
-
-
-                        //socket.close();
                     }
                 }
             }
-            //out.println("QUIT");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,14 +173,5 @@ public class Klient {
         }
         Klient client = new Klient(args[0]);
         client.play();
-    }
-
-    public void setPostionPanel(Ramka ramka){
-
-        System.out.println("setPoositionPanel1");
-        JButton dupa = new JButton("GRATULACJE CWELU");
-        ramka.remove(ramka.panelGry);
-        ramka.add(dupa, BorderLayout.CENTER);
-        System.out.println("setPoositionPanel2");
     }
 }

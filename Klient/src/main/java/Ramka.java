@@ -12,7 +12,6 @@ class Ramka extends JFrame {
     JButton pass;
 
 
-
     /**
      * konstrukcja ramki dla każdego usera
      * @param liczba_graczy liczba graczy

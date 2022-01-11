@@ -17,8 +17,6 @@ public class Serwer {
 
     ArrayList<Game.Player> players;
     Game.Player gracz1, gracz2, gracz3, gracz4, gracz5, gracz6;
-    final MusicPlayer mp3 = new MusicPlayer();
-
 
     /**
      * Funkcja do startowania wątków graczy i dolączania ich klientów do serwera
