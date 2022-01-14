@@ -6,6 +6,9 @@ import java.util.Scanner;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * klasa dla klienta z podłączeniem do serwera
+ */
 public class Klient {
 
     private Socket socket;

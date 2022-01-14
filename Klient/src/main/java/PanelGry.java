@@ -2,11 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * zawartość ramki - plansza i metody ruchu
+ */
 public class PanelGry extends JPanel {
 
-    /** * Tablica guzikow, ktore beda naszymi polami planszy**/
+    /**
+     * Tablica guzikow, ktore beda naszymi polami planszy
+     */
     public JButton[][] pola_planszy = new JButton[19][29];
+    /**
+     * puste pola planszy
+     */
     public JPanel[][] niegrywalne_pola = new JPanel[19][29];
+    /**
+     * kolor pionka
+     */
     public  Color kolor;
 
     final int[][] plansza = { //zakodowanie pól graczy, pustych pól i przestrzeni

@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
-class InstrukcjaRamka extends JFrame {
+/**
+ * klasa dla okienka z instrukcją
+ */
+public class InstrukcjaRamka extends JFrame {
 
     String tresc = "Ramka kazdego gracza zawiera 4 czesci: \n" +
             "- Na samej gorze ramki znajduje sie Pasek z naspisem 'Tura gracza'." +

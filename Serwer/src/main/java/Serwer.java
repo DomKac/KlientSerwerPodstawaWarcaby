@@ -13,6 +13,9 @@ import java.util.concurrent.Executors;
 
 //uruchomienie serwera dla wybranej liczby osób działa
 
+/**
+ * klasa główna serwera
+ */
 public class Serwer {
 
     ArrayList<Game.Player> players;

@@ -3,7 +3,14 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
+/**
+ * klasa do puszczania muzyki u klienta
+ */
 public class MusicClient {
+    /**
+     * puszczanie piosenki
+     * @param soundName nazwa piosenki
+     */
     public void playSound(String soundName)    // play soundName.wav
     {
         try

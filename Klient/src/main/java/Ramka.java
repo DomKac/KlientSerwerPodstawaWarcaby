@@ -5,19 +5,23 @@ import java.awt.event.ActionListener;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * klasa tworząca całe okienko z gui dla użytkownika
+ */
 class Ramka extends JFrame {
 
     PanelGry panelGry;
     JTextField which_player;
     JButton pass;
 
-
     /**
-     * konstrukcja ramki dla każdego usera
+     * konstruktor klasy ramka
      * @param liczba_graczy liczba graczy
-     * @param id id gracza
-     * @param markergracza oznaczenie, jaki kolor ma dany gracz
-     * @throws Exception ex
+     * @param id numer gracza
+     * @param markergracza kolor gracza
+     * @param desktopx wspólrzedna x na ekranie
+     * @param desktopy współrzedna y  na ekranie
+     * @throws Exception
      */
     Ramka(int liczba_graczy, char id, Color markergracza, int desktopx, int desktopy) throws Exception {
         super("Chinskie Warcaby, Gracz " + id + " ");

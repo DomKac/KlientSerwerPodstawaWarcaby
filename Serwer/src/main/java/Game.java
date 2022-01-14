@@ -6,7 +6,10 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-class Game {
+/**
+ * klasa do podpinania klientów
+ */
+public class Game {
 
     int numbers; //ilość graczy
     Player player; //gracz
@@ -40,7 +43,10 @@ class Game {
     }
 
 
-    class Player implements Runnable {
+    /**
+     * wątek gracza
+     */
+    public class Player implements Runnable {
         int num; //numer gracza
         Socket socket;
         Scanner input;

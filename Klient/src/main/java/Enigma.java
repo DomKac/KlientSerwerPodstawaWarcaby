@@ -1,5 +1,8 @@
 import java.awt.*;
 
+/**
+ * klasa do szyfrowania, kodowania i dekodowania wiadomości
+ */
 public class Enigma {
 
     /**
@@ -223,6 +226,11 @@ public class Enigma {
         }
     }
 
+    /**
+     * ustawienie okienka na wspólrzędnych ekranu w zależności od id gracza
+     * @param num id gracza
+     * @return współrzędna x
+     */
     public int set_desktop_x(char num){
         if(num == '1' || num == '4'){
             return 30;
@@ -234,6 +242,12 @@ public class Enigma {
             return 1010;
         }
     }
+
+    /**
+     * ustawienie okienka na wspólrzędnych ekranu w zależności od id gracza
+     * @param num id gracza
+     * @return współrzędna y
+     */
     public int set_desktop_y(char num){
         if(num == '1' || num == '2' || num == '3'){
             return 0;

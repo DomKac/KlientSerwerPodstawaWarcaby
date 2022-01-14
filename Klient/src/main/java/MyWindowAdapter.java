@@ -1,7 +1,7 @@
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-class MyWindowAdapter extends WindowAdapter {
+public class MyWindowAdapter extends WindowAdapter {
 
     /**
      * Metoda umozliwiajaca zamykanie okna "Przyciskiem X"
