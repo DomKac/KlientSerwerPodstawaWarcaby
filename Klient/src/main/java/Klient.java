@@ -57,7 +57,7 @@ public class Klient {
                 }
             }
             else{
-                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
+                if(frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.GRAY || frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE) {
 
                     //|| frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE //god mode
 
