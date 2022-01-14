@@ -59,6 +59,7 @@ public class Game {
          * ustawienie portu dla gracza i jego identyfikator
          * @param socket port
          * @param num id gracza
+         * @param win informacja czy gracz już wygrał
          */
         public Player(Socket socket, int num, int win) {
             this.socket = socket;
