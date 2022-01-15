@@ -2,35 +2,33 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.Socket;
-import java.util.Scanner;
 
 /**
  * klasa tworząca całe okienko z gui dla użytkownika
  */
 class Ramka extends JFrame {
 
-    PanelGry panelGry;
+    PanelGry game_panel;
     JTextField which_player;
     JButton pass;
 
     /**
      * konstruktor klasy ramka
-     * @param liczba_graczy liczba graczy
+     * @param count_of_players liczba graczy
      * @param id numer gracza
-     * @param markergracza kolor gracza
+     * @param player_mark kolor gracza
      * @param desktopx wspólrzedna x na ekranie
      * @param desktopy współrzedna y  na ekranie
-     * @throws Exception
+     * @throws Exception e
      */
-    Ramka(int liczba_graczy, char id, Color markergracza, int desktopx, int desktopy) throws Exception {
+    Ramka(int count_of_players, char id, Color player_mark, int desktopx, int desktopy) throws Exception {
         super("Chinskie Warcaby, Gracz " + id + " ");
         setBounds(desktopx,desktopy,465,426);
         addWindowListener(new MyWindowAdapter());
         setLayout(new BorderLayout());
 
-        panelGry = new PanelGry(liczba_graczy, markergracza);
-        this.add(panelGry,BorderLayout.CENTER);
+        game_panel = new PanelGry(count_of_players, player_mark);
+        this.add(game_panel,BorderLayout.CENTER);
 
         JPanel up_panel = new JPanel();
         up_panel.setLayout(new GridLayout(1,2));
@@ -50,14 +48,14 @@ class Ramka extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                InstrukcjaRamka nowa_instrukcja = new InstrukcjaRamka();
-                nowa_instrukcja.setVisible(true);
+                InstrukcjaRamka new_info = new InstrukcjaRamka();
+                new_info.setVisible(true);
             }
         };
 
-        JButton instrukcja = new JButton("Instrukcja");
-        down_panel.add(instrukcja);
-        instrukcja.addActionListener(open_instruction);
+        JButton info = new JButton("Instrukcja");
+        down_panel.add(info);
+        info.addActionListener(open_instruction);
 
         pass = new JButton("PASS");
         down_panel.add(pass);

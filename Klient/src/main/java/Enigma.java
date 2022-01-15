@@ -89,7 +89,7 @@ public class Enigma {
         n++;
         kolor = kolor + response.charAt(n);
 
-        frame.panelGry.messMoveSer(Integer.parseInt(x1.toString()),Integer.parseInt(y1.toString()),Integer.parseInt(x2.toString()),Integer.parseInt(y2.toString()),odkoduj_kolor(kolor));
+        frame.game_panel.makeMoveFromServer(Integer.parseInt(x1.toString()),Integer.parseInt(y1.toString()),Integer.parseInt(x2.toString()),Integer.parseInt(y2.toString()),odkoduj_kolor(kolor));
     }
 
 
