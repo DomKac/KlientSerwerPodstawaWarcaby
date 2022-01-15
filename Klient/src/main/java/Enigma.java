@@ -10,7 +10,7 @@ public class Enigma {
      * @param kolor kolor typu Color
      * @return litera-alias
      */
-    public String koduj_kolor(Color kolor){
+    public String codePlayerColor(Color kolor){
 
         if(kolor == Color.BLUE){
             return "B";
@@ -37,7 +37,7 @@ public class Enigma {
      * @param kolor alias literowy koloru
      * @return kolor Color
      */
-    public Color odkoduj_kolor(String kolor){
+    public Color decodePlayerColor(String kolor){
 
         return switch (kolor) {
             case "B" -> Color.BLUE;
@@ -54,7 +54,7 @@ public class Enigma {
      * @param response wiadomość
      * @param frame plansza gracza
      */
-    public void koloruj(String response, Ramka frame){
+    public void resolveMessageAndPerform(String response, Ramka frame){
 
         // MOVEXX,XX,YY,XX,YY,K,A
         StringBuilder x1 = new StringBuilder();
@@ -89,7 +89,7 @@ public class Enigma {
         n++;
         kolor = kolor + response.charAt(n);
 
-        frame.game_panel.makeMoveFromServer(Integer.parseInt(x1.toString()),Integer.parseInt(y1.toString()),Integer.parseInt(x2.toString()),Integer.parseInt(y2.toString()),odkoduj_kolor(kolor));
+        frame.game_panel.makeMoveFromServer(Integer.parseInt(x1.toString()),Integer.parseInt(y1.toString()),Integer.parseInt(x2.toString()),Integer.parseInt(y2.toString()), decodePlayerColor(kolor));
     }
 
 
@@ -99,7 +99,7 @@ public class Enigma {
      * @param ilosc ilość graczy
      * @return kolor gracza
      */
-    public Color kolorgracza(char numerek, int ilosc){
+    public Color getPlayerColor(char numerek, int ilosc){
         switch (ilosc){
             case 2: {
                 if(numerek == '1'){
@@ -166,7 +166,7 @@ public class Enigma {
      * @param ilosc ilość graczy
      * @return alias
      */
-    public char idgracza(char numerek, int ilosc){
+    public char getPlayerId(char numerek, int ilosc){
         switch (ilosc){
             case 2: {
                 if(numerek == '1'){

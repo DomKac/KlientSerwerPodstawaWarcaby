@@ -81,7 +81,7 @@ public class Klient {
 
                     if(my_turn){
                         mp3.playSound("koniecruchu.wav");
-                        out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(pawn_color));
+                        out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.codePlayerColor(pawn_color));
                         my_turn = false;
                     }
 
@@ -121,11 +121,11 @@ public class Klient {
             var literal_id = response.charAt(9);
             Enigma enigma2 = new Enigma();
             var count_of_clients = Character.getNumericValue(response.charAt(0));
-            char literal_color = enigma2.idgracza(literal_id, count_of_clients);
+            char literal_color = enigma2.getPlayerId(literal_id, count_of_clients);
             System.out.println("Witaj graczu o numerze: " + literal_id + " i kolorze: " + literal_color);
             System.out.println("ilość graczy wynosi: " + count_of_clients);
 
-            frame = new Ramka(count_of_clients, literal_id, enigma2.kolorgracza(literal_id, count_of_clients), enigma2.set_desktop_x(literal_id), enigma2.set_desktop_y(literal_id));
+            frame = new Ramka(count_of_clients, literal_id, enigma2.getPlayerColor(literal_id, count_of_clients), enigma2.set_desktop_x(literal_id), enigma2.set_desktop_y(literal_id));
             frame.game_panel.add_funcionality_for_fields(choose_your_pawn);
             frame.pass.addActionListener(skiper);
             frame.setVisible(true);
@@ -144,7 +144,7 @@ public class Klient {
                 else if(response.startsWith("TURN")){
 
                     System.out.println("teraz jest tura gracza o numerze: " + response.charAt(4));
-                    frame.which_player.setBackground(enigma2.kolorgracza(response.charAt(4), count_of_clients));
+                    frame.which_player.setBackground(enigma2.getPlayerColor(response.charAt(4), count_of_clients));
                     if(response.charAt(4) == literal_id){
                         my_turn = true;
                         System.out.println("twoja tura");
@@ -157,7 +157,7 @@ public class Klient {
                 else if(response.startsWith("MOVE")){ //serwer wysłał wiadomość o ruchu jakiegoś gracza
                     System.out.println(response); //musimy skopiować ten ruch u nas
 
-                    enigma2.koloruj(response, frame);// oddtworzenie ruchu gracza u nas
+                    enigma2.resolveMessageAndPerform(response, frame);// oddtworzenie ruchu gracza u nas
                     if(frame.game_panel.check_win_any(literal_color) && one_time_win){
                         System.out.println("KONIEC! WYGRALES");
                         mp3.playSound("epicwin.wav");
