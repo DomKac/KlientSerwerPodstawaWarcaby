@@ -130,7 +130,7 @@ public class Game {
                         {
                             players.get(i).output.println(command);
                         }
-                        przekazywanieKolejki();
+                        turnGiver();
                     }
                     else
                     {
@@ -141,7 +141,7 @@ public class Game {
                 {
                     if(currentplayer == player_id)
                     {
-                        przekazywanieKolejki();
+                        turnGiver();
                     }
                     else
                     {
@@ -160,7 +160,7 @@ public class Game {
         /**
          * funkcja do wysyłania klientom informacji o kolejce graczy
          */
-        public void przekazywanieKolejki()
+        public void turnGiver()
         {
             if(currentplayer < number_of_players)
             {
