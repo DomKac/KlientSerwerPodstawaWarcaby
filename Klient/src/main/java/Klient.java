@@ -78,6 +78,8 @@ public class Klient {
 
                     System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
                     frame.game_panel.clear_grey();
+                    frame.game_panel.playable_boardfields[previousX][previousY].setBackground(original_color);
+
 
                     if(my_turn){
                         mp3.playSound("koniecruchu.wav");
@@ -86,15 +88,18 @@ public class Klient {
                     }
 
                     pawn_clicked = true;
+
                 }
                 else if (previousX == currentX && previousY == currentY){
                     frame.game_panel.clear_grey();
+                    frame.game_panel.playable_boardfields[currentX][currentY].setBackground(original_color);
                     pawn_clicked = true;
                 }
                 else{
                     System.out.println("zle pole");
+                    //frame.game_panel.playable_boardfields[previousX][previousY].setBackground(original_color);
                 }
-                frame.game_panel.playable_boardfields[currentX][currentY].setBackground(original_color);
+
 
             }
         }
