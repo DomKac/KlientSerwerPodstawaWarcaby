@@ -72,7 +72,7 @@ public class Klient {
                 }
             }
             else{
-                if(frame.game_panel.playable_boardfields[currentX][currentY].getBackground() == Color.GRAY || frame.game_panel.playable_boardfields[currentX][currentY].getBackground() == Color.WHITE) {
+                if(frame.game_panel.playable_boardfields[currentX][currentY].getBackground() == Color.GRAY) {
 
                     //|| frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE //god mode
 
