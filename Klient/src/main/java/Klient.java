@@ -1,52 +1,69 @@
 import javax.swing.*;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * klasa dla klienta z podłączeniem do serwera
+ */
 public class Klient {
-
-    private Socket socket;
-    private Scanner in;
-    private PrintWriter out;
+//elo
+    private final Scanner in;
+    private final PrintWriter out;
     public Ramka frame;
-    public boolean tura = false;
+    public boolean my_turn = false; //informacja od serwera, czy dany gracz ma teraz swoją turę
+    final MusicClient mp3 = new MusicClient();
+    boolean one_time_win = true; //dzięki temu komunikat o zwycięztwie pójdzie tylko raz xd
+
+    /**
+     * konstruktor klienta
+     * @param serverAddress ipv4
+     * @throws Exception e
+     */
+    public Klient(String serverAddress) throws Exception
+    {
+        Socket socket = new Socket(serverAddress, 58901);
+        in = new Scanner(socket.getInputStream());
+        out = new PrintWriter(socket.getOutputStream(), true);
+    }
 
 /////////////////////////////////////////////////////
-    public ActionListener wyb_pionek = new ActionListener() {
+    public ActionListener choose_your_pawn = new ActionListener() {
 
-        public boolean wybrano_piona = true; // pomaga określić czy trzeba wybrać pionka czy ruszyć pionka
+        public boolean pawn_clicked = true; // pomaga określić czy trzeba wybrać pionka czy ruszyć pionka
         // true -> kliknięcie pola_planszy wybiera pionka którego chcemy ruszyć
         // false -> kilknięcie pola_planszy stawia wcześniej wybranego piona na wybrane miejsce
-        Color kolor_piona;
+        Color pawn_color, original_color;
         int currentX;
         int currentY;
         int previousX;
         int previousY;
         final Enigma enigma = new Enigma();
 
-
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) { //obsługa ruchu
 
             String coordinates = ((JComponent) e.getSource()).getName();
-            System.out.println(coordinates);
-            currentX = frame.get_current_X(coordinates);
-            currentY = frame.get_current_Y(coordinates);
+            currentX = frame.game_panel.get_current_X(coordinates);
+            currentY = frame.game_panel.get_current_Y(coordinates);
 
-            if(wybrano_piona){
+            if(pawn_clicked){
 
 
-                if(frame.pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
+                if(frame.game_panel.playable_boardfields[currentX][currentY].getBackground() == frame.game_panel.color){
 
-                    kolor_piona = frame.pola_planszy[currentX][currentY].getBackground();
-                    frame.check_ALL(currentX, currentY);
+                    mp3.playSound("markpiona.wav");
+                    pawn_color = frame.game_panel.playable_boardfields[currentX][currentY].getBackground();
+                    original_color = pawn_color;
+                    frame.game_panel.playable_boardfields[currentX][currentY].setBackground(pawn_color.darker());
+                    frame.game_panel.check_ALL(currentX, currentY);
                     previousX = currentX;
                     previousY = currentY;
 
-                    wybrano_piona = false;
+                    pawn_clicked = false;
 
                     System.out.println();
                 }
@@ -55,92 +72,106 @@ public class Klient {
                 }
             }
             else{
-                if(frame.pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
+                if(frame.game_panel.playable_boardfields[currentX][currentY].getBackground() == Color.GRAY) {
+
+                    //|| frame.panelGry.pola_planszy[currentX][currentY].getBackground() == Color.WHITE //god mode
+
                     System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
-                    frame.clear_grey();
+                    frame.game_panel.clear_grey();
+                    frame.game_panel.playable_boardfields[previousX][previousY].setBackground(original_color);
 
-                    if(tura){
-                        out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.koduj_kolor(kolor_piona));
-                        tura = false;
+
+                    if(my_turn){
+                        mp3.playSound("koniecruchu.wav");
+                        out.println("MOVE" + previousX + "," + previousY + "," + currentX + "," + currentY + "," + enigma.codePlayerColor(pawn_color));
+                        my_turn = false;
                     }
 
-                    if(frame.check_ENDGAME()){
-                        System.out.println("KONIEC!");
-                        System.exit(0);
-                    }
-                    wybrano_piona = true;
+                    pawn_clicked = true;
+
                 }
                 else if (previousX == currentX && previousY == currentY){
-                    frame.clear_grey();
-                    wybrano_piona = true;
+                    frame.game_panel.clear_grey();
+                    frame.game_panel.playable_boardfields[currentX][currentY].setBackground(original_color);
+                    pawn_clicked = true;
                 }
                 else{
-                    System.out.println("zle pole debilu");
+                    System.out.println("zle pole");
+                    //frame.game_panel.playable_boardfields[previousX][previousY].setBackground(original_color);
                 }
+
+
+            }
+        }
+    };
+
+    /**
+     * obsługa pominięcia kolejki
+     */
+    public ActionListener skiper = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(my_turn){
+                out.println("SKIP");
+                my_turn = false;
             }
         }
     };
 
     //////////////////////////////////////////
-    public Klient(String serverAddress) throws Exception {
-
-        socket = new Socket(serverAddress, 58901);
-        in = new Scanner(socket.getInputStream());
-        out = new PrintWriter(socket.getOutputStream(), true);
-
-    }
 
     public void play() throws Exception {
         try {
             var response = in.nextLine();
-            var num = response.charAt(9);
+            var literal_id = response.charAt(9);
             Enigma enigma2 = new Enigma();
-            var ilosc = Character.getNumericValue(response.charAt(0));
-            System.out.println("Witaj graczu o numerze: " + num + " " + enigma2.idgracza(num, ilosc));
-            System.out.println("ilość graczy wynosi: " + ilosc);
+            var count_of_clients = Character.getNumericValue(response.charAt(0));
+            char literal_color = enigma2.getPlayerId(literal_id, count_of_clients);
+            System.out.println("Witaj graczu o numerze: " + literal_id + " i kolorze: " + literal_color);
+            System.out.println("ilość graczy wynosi: " + count_of_clients);
 
-
-            frame = new Ramka(ilosc, num, enigma2.kolorgracza(num, ilosc));
-            frame.dodaj_wlasciwosci_guzikom(wyb_pionek);
-            //frame.setBackground(enigma2.kolorgracza(num, ilosc));
-            //frame.marker(enigma2.kolorgracza(num, ilosc));
+            frame = new Ramka(count_of_clients, literal_id, enigma2.getPlayerColor(literal_id, count_of_clients), enigma2.set_desktop_x(literal_id), enigma2.set_desktop_y(literal_id));
+            frame.game_panel.add_funcionality_for_fields(choose_your_pawn);
+            frame.pass.addActionListener(skiper);
             frame.setVisible(true);
-
-            if(ilosc == 4){
-                frame.niegrywki[1][1].setBackground(Color.ORANGE);
-            }
-            else{
-                frame.niegrywki[1][1].setBackground(Color.PINK);
-            }
-
-
 
             while (in.hasNextLine()) {
                 response = in.nextLine();
-                System.out.println("startpetli");
 
                 if(response.startsWith("MESSAGE")){
                     System.out.println(response);
-                    if(response.charAt(15) == num){
-                        tura = true;
+
+                    if(response.charAt(15) == literal_id){
+                        my_turn = true;
                     }
                 }
 
                 else if(response.startsWith("TURN")){
-                    System.out.println("teraz jest tura gracza o numerze: " + response.charAt(4));
-                    if(response.charAt(4) == num){
-                        tura = true;
-                    }
 
+                    System.out.println("teraz jest tura gracza o numerze: " + response.charAt(4));
+                    frame.which_player.setBackground(enigma2.getPlayerColor(response.charAt(4), count_of_clients));
+                    if(response.charAt(4) == literal_id){
+                        my_turn = true;
+                        System.out.println("twoja tura");
+                        if(frame.game_panel.check_win_any(literal_color)){
+                            System.out.println("KONIEC!");
+                            out.println("SKIP");
+                        }
+                    }
                 }
                 else if(response.startsWith("MOVE")){ //serwer wysłał wiadomość o ruchu jakiegoś gracza
                     System.out.println(response); //musimy skopiować ten ruch u nas
-                    //frame.niegrywki[1][1].setBackground(enigma2.przekazture(num, ilosc));
-                    enigma2.koloruj(response, frame);
-                }
 
+                    enigma2.resolveMessageAndPerform(response, frame);// oddtworzenie ruchu gracza u nas
+                    if(frame.game_panel.check_win_any(literal_color) && one_time_win){
+                        System.out.println("KONIEC! WYGRALES");
+                        mp3.playSound("epicwin.wav");
+                        out.println("WINNER" + literal_id);
+                        frame.setVisible(false);
+                        one_time_win = false;
+                    }
+                }
             }
-            out.println("QUIT");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,9 +182,14 @@ public class Klient {
         }
     }
 
+    /**
+     * uruchomienie klienta
+     * @param args ipv4
+     * @throws Exception ex
+     */
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {
-            System.err.println("Pass the server IP as the sole command line argument");
+            System.err.println("Podaj IPv4 komputera przy odpalaniu programu");
             return;
         }
         Klient client = new Klient(args[0]);

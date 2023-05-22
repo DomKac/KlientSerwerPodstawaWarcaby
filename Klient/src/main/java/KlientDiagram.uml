@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="501.5" y="827.0">MusicClient</node>
+    <node x="325.5" y="590.0">Ramka</node>
+    <node x="272.5" y="761.0">Enigma</node>
+    <node x="389.0" y="231.5">InstrukcjaRamka</node>
+    <node x="577.0" y="243.0">MyWindowAdapter</node>
+    <node x="0.0" y="0.0">PanelGry</node>
+    <node x="384.5" y="997.0">Klient</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Enigma" target="Ramka">
+      <point x="0.0" y="-93.0" />
+      <point x="371.0" y="736.0" />
+      <point x="360.6666666666667" y="736.0" />
+      <point x="-70.33333333333331" y="60.5" />
+    </edge>
+    <edge source="Klient" target="Ramka">
+      <point x="27.285714285714278" y="-149.0" />
+      <point x="507.2857142857143" y="977.0" />
+      <point x="491.0" y="977.0" />
+      <point x="491.0" y="736.0" />
+      <point x="501.3333333333333" y="736.0" />
+      <point x="70.33333333333331" y="60.5" />
+    </edge>
+    <edge source="Klient" target="MusicClient">
+      <point x="81.85714285714289" y="-149.0" />
+      <point x="561.8571428571429" y="977.0" />
+      <point x="630.5" y="977.0" />
+      <point x="43.0" y="27.0" />
+    </edge>
+    <edge source="Klient" target="Enigma">
+      <point x="-27.285714285714334" y="-149.0" />
+      <point x="452.71428571428567" y="977.0" />
+      <point x="436.6666666666667" y="977.0" />
+      <point x="65.66666666666669" y="93.0" />
+    </edge>
+    <edge source="Ramka" target="InstrukcjaRamka">
+      <point x="42.19999999999999" y="-60.5" />
+      <point x="473.2" y="560.0" />
+      <point x="515.0" y="560.0" />
+      <point x="42.0" y="38.5" />
+    </edge>
+    <edge source="Ramka" target="PanelGry">
+      <point x="-84.39999999999998" y="-60.5" />
+      <point x="346.6" y="570.0" />
+      <point x="92.25" y="570.0" />
+      <point x="-92.25" y="270.0" />
+    </edge>
+    <edge source="Ramka" target="MyWindowAdapter">
+      <point x="84.39999999999998" y="-60.5" />
+      <point x="515.4" y="570.0" />
+      <point x="696.0" y="570.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="368.92857142857133" y="546.6666666666666" />
+  <SelectedNodes>
+    <node>MyWindowAdapter</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

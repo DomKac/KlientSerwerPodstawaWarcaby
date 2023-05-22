@@ -2,152 +2,192 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-class Game {
+/**
+ * klasa do podpinania klientów
+ */
+public class Game {
 
-    int numbers;
-    Player player;
-    ArrayList<Player> players;
+    int number_of_players; //ilość graczy
+    Player player; //gracz
+    ArrayList<Player> players; //tablica graczy od 0 do 5, więc players.get(0) to player o id 1
     Random random = new Random(); //określenie pierwszego gracza
 
-    public void tab(ArrayList<Player> players){
+
+    /**
+     * funkcja do zwracania tablicy z graczami
+     * @param players gracze
+     */
+    public void setTabOfPlayers(ArrayList<Player> players)
+    {
         this.players = players;
     }
 
-    public void set(Player player)
+    /**
+     * funkcja do zwracania gracza
+     * @param player gracz
+     */
+    public void setPlayer(Player player)
     {
         this.player = player;
     }
 
-    public void numOf(int numbers){
-        this.numbers = numbers;
+    /**
+     * funkcja do zwracania ilości graczy na podstwie wyboru z menu
+     * @param number_of_players ilość graczy
+     */
+    public void setCountOfPlayers(int number_of_players)
+    {
+        this.number_of_players = number_of_players;
     }
 
-    class Player implements Runnable {
-        int num; //numer gracza
+
+    /**
+     * wątek gracza
+     */
+    public class Player implements Runnable {
+        int player_id; //numer gracza od 1 do 6
         Socket socket;
         Scanner input;
         PrintWriter output;
-        int currentplayer; //czyja jest kolejka
 
-        public Player(Socket socket, int num) {
+
+        int win = 0;
+        int currentplayer = 1; //czyja jest kolejka
+        final MusicPlayer mp3 = new MusicPlayer();
+
+        /**
+         * ustawienie portu dla gracza i jego identyfikator
+         * @param socket port
+         * @param player_id id gracza
+         * @param win informacja czy gracz już wygrał
+         */
+        public Player(Socket socket, int player_id, int win) throws IOException {
             this.socket = socket;
-            this.num = num;
+            this.player_id = player_id;
+            this.win = win;
         }
+
+
 
 
         @Override
         public void run() {
             try {
+                System.out.println("ilosc graczy: " + number_of_players);
                 setup();
                 processCommands();
             } catch (Exception e) {
                 e.printStackTrace();
-            }// finally {
-            //    if (opponent != null && opponent.output != null) {
-            //        opponent.output.println("OTHER_PLAYER_LEFT");
-            //    }
-            //    try {
-            //        socket.close();
-            //    } catch (IOException e) {
-            //    }
-            //}
+            }
         }
 
-        private void setup() throws IOException {
+        /**
+         * funkcja startowa do ustalenia gracza początkowego
+         * @throws IOException nic
+         */
+        public void setup() throws IOException {
+
+            currentplayer = random.nextInt(number_of_players)+1;
+
             input = new Scanner(socket.getInputStream());
             output = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("ilość graczuw: " + numbers);
-            currentplayer = random.nextInt(numbers)+1;
 
-            output.println(numbers + "WELCOME " + num); //0 i 9
+            output.println(number_of_players + "WELCOME " + player_id); //0 i 9
 
-            if (num < numbers) {
+
+            if (player_id < number_of_players) {
                 output.println("MESSAGE Waiting for opponent to connect");
             } else {
                 System.out.println("The game has started");
+                mp3.playSound("b1git.wav"); //muzyka w tle
                 System.out.println("Player " + currentplayer + " starts");
 
-                for(int i = 0; i < numbers; i++){
-                    System.out.println("mess0");
+                for(int i = 0; i < number_of_players; i++){
                     players.get(i).currentplayer = currentplayer;
-                    System.out.println("mess1");
                     players.get(i).output.println("TURN" + players.get(i).currentplayer);
-                    System.out.println("mess2");
-                    players.get(i).output.println("MESSAGE Player " + players.get(i).currentplayer + " Turn");
-                    System.out.println("mess3");
+                    players.get(i).output.println("MESSAGE_Player " + players.get(i).currentplayer + " Turn");
                 }
             }
         }
 
-
-        private void processCommands(){
+        /**
+         * przetwarzanie komend od graczy i wysyłka komend do nich
+         */
+        public void processCommands(){
 
             while (input.hasNextLine()){
                 String command = input.nextLine();
 
-                if(command.startsWith("MOVE")){//ruch z actionlistenera
-                    if(currentplayer == num && num == color_symbol_to_player(command.charAt(command.length()-1))){
-                        System.out.println("dostano");
+                if(command.startsWith("MOVE"))
+                {//ruch z actionlistenera
+                    if(currentplayer == player_id && player_id == color_symbol_to_player(command.charAt(command.length()-1)))
+                    {
 
-                        for(int i = 0; i < numbers; i++){
+                        for(int i = 0; i < number_of_players; i++)
+                        {
                             players.get(i).output.println(command);
                         }
-                        if(currentplayer < numbers){
-                            System.out.println("sprawdxmychuja");
-                            for (int i = 0; i < numbers; i++){
-                                players.get(i).currentplayer++;
-                                players.get(i).output.println("TURN" + (players.get(i).currentplayer));
-                            }
-                        }
-                        else{
-                            for (int i = 0; i < numbers; i++){
-                                players.get(i).currentplayer = 1;
-                                players.get(i).output.println("TURN" + (players.get(i).currentplayer));
-                            }
-                        }
-
-
+                        turnGiver();
                     }
-                    else{
-                        players.get(num - 1).output.println("NOT");
+                    else
+                    {
+                        players.get(player_id - 1).output.println("NOT");
                     }
-
-
+                }
+                else if (command.startsWith("SKIP"))
+                {
+                    if(currentplayer == player_id)
+                    {
+                        turnGiver();
+                    }
+                    else
+                    {
+                        players.get(player_id - 1).output.println("NOT");
+                    }
                 }
 
-                else if (command.startsWith("SKIP")){
-                    //skip
+                else if (command.startsWith("WINNER"))
+                {//poprawne
+                    players.get(Character.getNumericValue(command.charAt(6))-1).win = 1; //serwer ustawia graczowi parametr informujący o zwyięstwie
+                    System.out.println("the winner is" + players.get(Character.getNumericValue(command.charAt(6))-1).player_id);
                 }
-
             }
         }
 
-////////////////////////////////////////////////////////////////////////////koniec
+        /**
+         * funkcja do wysyłania klientom informacji o kolejce graczy
+         */
+        public void turnGiver()
+        {
+            if(currentplayer < number_of_players)
+            {
+                for (int i = 0; i < number_of_players; i++)
+                {
+                    players.get(i).currentplayer++;
+                    players.get(i).output.println("TURN" + (players.get(i).currentplayer));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < number_of_players; i++)
+                {
+                    players.get(i).currentplayer = 1;
+                    players.get(i).output.println("TURN" + (players.get(i).currentplayer));
+                }
+            }
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        /**
+         * funkcja na podstawie oznaczenia koloru gracza zwraca wartość numeryczną tego koloru
+         * @param color_symbol alias literowy koloru
+         * @return alias numeryczny koloru
+         */
         public int color_symbol_to_player(char color_symbol){
 
-            switch (numbers){
+            switch (number_of_players){
 
                 case 2: {
                     if(color_symbol == 'P'){
